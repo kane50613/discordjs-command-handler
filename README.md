@@ -1,4 +1,6 @@
 # discordjs-command-handler
+Simple command handler for discord.js
+
 [繁體中文](doc/README-zh.md)
 
 ***
@@ -13,7 +15,7 @@ npm i discordjs-command-handler
 
 - easy to set up
 - works perfectly with discord.js
-- ratelimit support
+- **ratelimit support**
 - commands group support
 
 ## Usage
