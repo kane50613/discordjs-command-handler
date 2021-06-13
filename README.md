@@ -1,17 +1,23 @@
-# discordjs-command-handler
-Simple command handler for discord.js
+# djs-command-handler
+> Simple command handler for discord.js
 
 [繁體中文](doc/README-zh.md)
 
 ***
 
-## Download
+## Install
 run this in your terminal
 ```shell
-npm i discordjs-command-handler
+npm i @gary50613/djs-command-handler
 ```
 
-## Features
+## Test
+```shell
+npm i
+npm test
+```
+
+## ✨ Features
 
 - easy to set up
 - works perfectly with discord.js
@@ -58,7 +64,7 @@ module.exports = Ping
 
 ## Reference
 ### options
-```json
+```js
 {
   ratelimit: {
     enable: false, // whether enable ratelimit
@@ -74,8 +80,10 @@ module.exports = Ping
 }
 ```
 
-## Test
-```shell
-npm i
-npm test
-```
+## Author
+🧑‍💻 **Kane**
+- Github @Gary50613
+
+## ❤️ Contributing
+Feel free to open [issue](https://github.com/Gary50613/discordjs-command-handler/issues)
+or join [my discord server](https://discord.gg/ct2ufag)
