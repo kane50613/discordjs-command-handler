@@ -1,9 +1,9 @@
 class Command {
-	constructor(name, description, usage, type, alias) {
-		this.name = name || ""
+	constructor(name, description, usage, group, alias) {
+		this.name = name
 		this.description = description || ""
 		this.usage = usage || ""
-		this.type = type || ""
+		this.group = group
 		this.alias = alias || []
 	}
 
