@@ -1,6 +1,9 @@
+const Group = require("../Base/Group");
+
 class CommandManager {
 	constructor() {
 		this.commands = []
+		this.groups = new Map()
 	}
 
 	/**
@@ -11,6 +14,15 @@ class CommandManager {
 		if(Array.isArray(command))
 			return command.forEach(this.register)
 		this.commands.push(command)
+
+		if(command?.group?.length > 0) {
+			let group = this.groups.get(command?.group)
+			if(!group) {
+				group = new Group(command?.group)
+				this.groups.set(command.group, group)
+			}
+			group.register(command)
+		}
 	}
 
 	/**
@@ -20,6 +32,10 @@ class CommandManager {
 	 */
 	get(name) {
 		return this.commands.find((c) => c?.name === name || c?.alias?.contains(name))
+	}
+
+	getGroup(x) {
+		return this.groups.get(x)
 	}
 }
 
