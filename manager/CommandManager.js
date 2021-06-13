@@ -13,6 +13,8 @@ class CommandManager {
 	register(command) {
 		if(Array.isArray(command))
 			return command.forEach(this.register)
+
+		command = new command()
 		this.commands.push(command)
 
 		if(command?.group?.length > 0) {
@@ -31,7 +33,7 @@ class CommandManager {
 	 * @return boolean
 	 */
 	get(name) {
-		return this.commands.find((c) => c?.name === name || c?.alias?.contains(name))
+		return this.commands.find((c) => c?.name === name.toLowerCase() || c?.alias?.includes(name.toLowerCase()))
 	}
 
 	getGroup(x) {

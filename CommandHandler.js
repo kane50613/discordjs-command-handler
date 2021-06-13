@@ -22,11 +22,13 @@ class CommandHandler extends EventEmitter {
 
 
 	constructor(bot, options) {
+		super()
+
 		this.bot = bot
 		this.commands = new CommandManager()
 
 		if(this.options)
-			Object.assign(options, this.options)
+			Object.assign(this.options, options)
 		if(this.options?.ratelimit?.enable)
 			this.ratelimit = new RateLimitManager(this?.options?.ratelimit)
 
@@ -36,11 +38,13 @@ class CommandHandler extends EventEmitter {
 			if(!this.options?.dm && m?.channel?.type === "dm")
 				return this.emit("dm", m)
 
-			if(this.ratelimit.isRateLimited(m?.member))
+			if(this.ratelimit?.isRateLimited(m?.member))
 				return this.emit("ratelimit", m)
 
-			let args = m.content.split(" "),
-				command = args[0]?.split(this.options.prefix)
+			let args = m.content?.split(" "),
+				command = args[0]?.split(this.options.prefix)[1]
+			args = args.slice(1)
+
 			this.commands.get(command)?.execute(m, args, m?.member, m?.guild)
 		})
 	}

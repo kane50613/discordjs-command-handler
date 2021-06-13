@@ -1,0 +1,33 @@
+{
+  "name": "discordjs-command-handler",
+  "version": "1.0",
+  "description": "simple discord.js command handler",
+  "main": "CommandHandler.js",
+  "directories": {
+    "doc": "doc",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "cd test && node index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gary50613/discordjs-command-handler.git"
+  },
+  "keywords": [
+    "discord.js",
+    "discordjs",
+    "command",
+    "ratelimit",
+    "handler"
+  ],
+  "author": "Gary50613",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Gary50613/discordjs-command-handler/issues"
+  },
+  "homepage": "https://github.com/Gary50613/discordjs-command-handler#readme",
+  "dependencies": {
+    "discord.js": "^12.5.3"
+  }
+}
