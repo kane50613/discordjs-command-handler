@@ -8,7 +8,7 @@
 ## 安裝
 在終端機輸入
 ```shell
-npm i @gary50613/djs-command-handler
+npm i @gary50613/discord.js-command-handler
 ```
 
 ## 測試

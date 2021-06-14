@@ -8,7 +8,7 @@
 ## Install
 run this in your terminal
 ```shell
-npm i @gary50613/djs-command-handler
+npm i @gary50613/discord.js-command-handler
 ```
 
 ## Test
