@@ -30,11 +30,27 @@ basic how to initialize with [options](#options)
 const CommandHandler = require('../CommandHandler')
 const Discord = require('discord.js')
 
+// import a command
+const ping = require("./commands/ping")
+
 const bot = new Discord.Client()
 const commandHandler = new CommandHandler(bot, {
-	prefix: "."
-	//options
+    prefix: "."
+    //options
 })
+
+// register a command
+commandHandler.commands.register(ping)
+
+// or register multiple command at the same time
+commandHandler.commands.register([ping, ..., ...])
+
+// listen to event
+commandHandler.on("dm", (m) => {
+    m.channel.send("u can only use command in a guild!")
+})
+
+bot.login(process.env.TOKEN)
 ```
 
 make a command
@@ -62,21 +78,30 @@ class Ping extends Command {
 module.exports = Ping
 ```
 
+## Event
+type | description | parameter
+---|---|---
+dm | user execute a command in dm | Message
+ratelimit | user get ratelimited | Message
+execute | command successfully executed | Command, Message
+error | command execute error | Error, Command, Message
+
 ## Reference
 ### options
 ```js
 {
-  ratelimit: {
-    enable: false, // whether enable ratelimit
-      interval: 5000, // interval to limit
-      bypass: {
-        users: [], // specific users ID can bypass ratelimit 
-        permissions: ["ADMINISTRATOR"], // specific perimissions FLAG can bypass ratelimit
-        roles: [] // // specific roles ID can bypass ratelimit
-    }
-  },
-  prefix: "PREFIX", // bot's prefix
-  dm: false // whether accept dm commands
+    ratelimit: {
+        enable: false, // whether enable ratelimit
+        interval: 5000, // interval to limit
+        bypass: {
+            users: [], // specific users ID can bypass ratelimit 
+            permissions: ["ADMINISTRATOR"], // specific perimissions FLAG can bypass ratelimit
+            roles: [] // // specific roles ID can bypass ratelimit
+        }
+    },
+    prefix: "PREFIX", // bot's prefix
+    dm: false, // whether accept dm commands
+    bot: false // whether accept bot execute command  
 }
 ```
 

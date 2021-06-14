@@ -17,7 +17,8 @@ class CommandHandler extends EventEmitter {
 			}
 		},
 		prefix: "PREFIX",
-		dm: false
+		dm: false,
+		bot: false
 	}
 
 
@@ -35,6 +36,8 @@ class CommandHandler extends EventEmitter {
 		this.bot.on("message", async (m) => {
 			if(!m?.content.startsWith(this.options?.prefix))
 				return
+			if(!this.options?.bot && m?.author?.bot)
+				return
 			if(!this.options?.dm && m?.channel?.type === "dm")
 				return this.emit("dm", m)
 
@@ -46,6 +49,8 @@ class CommandHandler extends EventEmitter {
 			args = args.slice(1)
 
 			this.commands.get(command)?.execute(m, args, m?.member, m?.guild)
+			.then(() => this.emit("execute", this.commands.get(command), m))
+			.catch((e) => this.emit("error", e, this.commands.get(command), m))
 		})
 	}
 }
