@@ -82,7 +82,7 @@ module.exports = Ping
 type | description | parameter
 ---|---|---
 dm | user execute a command in dm | Message
-ratelimit | user get ratelimited | Message
+ratelimit | user get ratelimited | Millisecond, Message
 execute | command successfully executed | Command, Message
 error | command execute error | Error, Command, Message
 

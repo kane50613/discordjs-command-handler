@@ -41,8 +41,8 @@ class CommandHandler extends EventEmitter {
 			if(!this.options?.dm && m?.channel?.type === "dm")
 				return this.emit("dm", m)
 
-			if(this.options?.ratelimit?.enable && this.ratelimit?.isRateLimited(m?.member))
-				return this.emit("ratelimit", m)
+			if(this.options?.ratelimit?.enable && this.ratelimit?.isRatelimited(m?.member))
+				return this.emit("ratelimit", this.ratelimit.getRatelimit(m?.member), m)
 
 			let args = m.content?.split(" "),
 				command = args[0]?.split(this.options.prefix)[1]

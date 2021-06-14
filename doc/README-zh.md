@@ -83,7 +83,7 @@ module.exports = Ping
 類型 | 簡介 | 參數
 ---|---|---
 dm | 當私訊使用指令 | 訊息
-ratelimit | 當使用者被冷卻 | 訊息
+ratelimit | 當使用者被冷卻 | 秒數, 訊息
 execute | 指令成功執行 | 指令, 訊息
 error | 指令執行時出錯 | 錯誤, 指令, 訊息
 
