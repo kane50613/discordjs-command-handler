@@ -13,24 +13,26 @@ class RatelimitManager {
 	 * @returns {boolean}
 	 */
 	isRatelimited(user) {
+		if(this.options?.bypass?.users?.includes(user?.id) ||
+			this.options?.permissions?.some(p => user?.permissions?.has(p)) ||
+			this.options?.roles?.some(r => user?.roles?.cache?.get(r)))
+		return false
+
 		if(!this.ratelimit.get(user?.id)) {
-			this.updateRatelimit(user?.id)
+			this.updateRatelimit(user)
 			return false
 		}
 
-		return !this.options?.bypass?.users?.includes(user?.id) ||
-			!this.options?.permissions?.some(p => user?.permissions?.has(p)) ||
-			!this.options?.roles?.some(r => user?.roles?.cache?.find(r)) ||
-			new Date().getTime() - this.ratelimit.get(user?.id)?.lastMessage < this.options.interval
+		return new Date().getTime() - this.ratelimit.get(user?.id)?.lastMessage < this.options?.interval
 	}
 
 	getRatelimit(user) {
 		if(!this.ratelimit.get(user?.id)) {
-			this.updateRatelimit(user?.id)
+			this.updateRatelimit(user)
 			return 0
 		}
 
-		return new Date().getTime() - this.ratelimit.get(user?.id)
+		return this.options?.interval - (new Date().getTime() - this.ratelimit.get(user?.id)?.lastMessage)
 	}
 
 	/**

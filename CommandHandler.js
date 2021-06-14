@@ -2,6 +2,7 @@ const EventEmitter = require("events").EventEmitter
 
 const RateLimitManager = require("./manager/RatelimitManager")
 const CommandManager = require("./manager/CommandManager")
+const Util = require("./Util")
 
 class CommandHandler extends EventEmitter {
 	static Command = require("./Base/Command")
@@ -29,7 +30,7 @@ class CommandHandler extends EventEmitter {
 		this.commands = new CommandManager()
 
 		if(this.options)
-			Object.assign(this.options, options)
+			this.options = Util.assignObject(this.options, options)
 		if(this.options?.ratelimit?.enable)
 			this.ratelimit = new RateLimitManager(this?.options?.ratelimit)
 
@@ -41,7 +42,7 @@ class CommandHandler extends EventEmitter {
 			if(!this.options?.dm && m?.channel?.type === "dm")
 				return this.emit("dm", m)
 
-			if(this.options?.ratelimit?.enable && this.ratelimit?.isRatelimited(m?.member))
+			if(this.ratelimit?.isRatelimited(m?.member))
 				return this.emit("ratelimit", this.ratelimit.getRatelimit(m?.member), m)
 
 			let args = m.content?.split(" "),
@@ -51,7 +52,7 @@ class CommandHandler extends EventEmitter {
 			this.commands.get(command)?.execute(this.bot, m, args, m?.member, m?.guild)
 			.then(() => this.emit("execute", this.commands.get(command), m))
 			.catch((e) => this.emit("error", e, this.commands.get(command), m))
-			.finally(() => this.ratelimit.updateRatelimit(m?.member))
+			.finally(() => this.ratelimit?.updateRatelimit(m?.member))
 		})
 	}
 }
