@@ -36,7 +36,7 @@ const ping = require("./commands/ping")
 const bot = new Discord.Client()
 const commandHandler = new CommandHandler(bot, {
     prefix: "."
-    //options
+    // options
 })
 
 // register a command
@@ -69,7 +69,7 @@ class Ping extends Command {
     }
     
     // execute function to call
-    execute(message, args, member, guild) {
+    execute(bot, message, args, member, guild) {
         // just write like normal discord.js
         message.reply('pong!')
     }
@@ -107,7 +107,7 @@ error | command execute error | Error, Command, Message
 
 ## Author
 🧑‍💻 **Kane**
-- Github @Gary50613
+- Github [@Gary50613](https://github.com/Gary50613)
 
 ## ❤️ Contributing
 Feel free to open [issue](https://github.com/Gary50613/discordjs-command-handler/issues)
