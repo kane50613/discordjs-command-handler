@@ -7,8 +7,7 @@ class Command {
 		this.alias = alias.map(x => x.toLowerCase()) || []
 	}
 
-	execute(message, args, member, guild) {
-
+	async execute(message, args, member, guild) {
 	}
 }
 

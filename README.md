@@ -27,7 +27,7 @@ npm test
 ## Usage
 basic how to initialize with [options](#options)
 ```js
-const CommandHandler = require('../CommandHandler')
+const CommandHandler = require('@gary50613/djs-command-handler')
 const Discord = require('discord.js')
 
 // import a command
@@ -55,7 +55,7 @@ bot.login(process.env.TOKEN)
 
 make a command
 ```js
-const Command = require("../../Base/Command")
+const Command = require("@gary50613/djs-command-handler").Command
 
 class Ping extends Command {
     constructor() {

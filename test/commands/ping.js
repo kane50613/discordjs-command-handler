@@ -11,7 +11,7 @@ class Ping extends Command {
 		);
 	}
 
-	execute(message, args, member, guild) {
+	async execute(message, args, member, guild) {
 		message.reply('pong!')
 	}
 }
