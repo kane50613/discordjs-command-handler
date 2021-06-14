@@ -1,5 +1,5 @@
 {
-  "name": "@gary50613/djs-command-handler",
+  "name": "@gary50613/discord.js-command-handler",
   "version": "1.1.0",
   "description": "simple discord.js command handler",
   "main": "CommandHandler.js",
