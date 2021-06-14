@@ -13,6 +13,10 @@ class RatelimitManager {
 	 * @returns {boolean}
 	 */
 	isRateLimited(user) {
+		if(!this.ratelimit.get(user?.id)) {
+			this.updateRatelimit(user?.id)
+			return false
+		}
 		return !this.options?.bypass?.users?.includes(user?.id) ||
 			!this.options?.permissions?.some(p => user?.permissions?.has(p)) ||
 			!this.options?.roles?.some(r => user?.roles?.cache?.find(r)) ||

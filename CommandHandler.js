@@ -41,7 +41,7 @@ class CommandHandler extends EventEmitter {
 			if(!this.options?.dm && m?.channel?.type === "dm")
 				return this.emit("dm", m)
 
-			if(this.ratelimit?.isRateLimited(m?.member))
+			if(this.options?.ratelimit?.enable && this.ratelimit?.isRateLimited(m?.member))
 				return this.emit("ratelimit", m)
 
 			let args = m.content?.split(" "),
@@ -51,6 +51,7 @@ class CommandHandler extends EventEmitter {
 			this.commands.get(command)?.execute(this.bot, m, args, m?.member, m?.guild)
 			.then(() => this.emit("execute", this.commands.get(command), m))
 			.catch((e) => this.emit("error", e, this.commands.get(command), m))
+			.finally(() => this.ratelimit.updateRatelimit(m?.member))
 		})
 	}
 }
