@@ -31,13 +31,13 @@ class CommandManager {
 	 * @param {String} folderPath Path to folder
 	 * @example commandHandler.commands.loadCommands("./commands")
 	 */
-	loadCommands(folderPath) {
+	async loadCommands(folderPath) {
 		if (typeof folderPath !== "string")
 			throw new TypeError(`folderPath must be string, received ${typeof folderPath}`)
 
-		fs.readdirSync(folderPath)
+		await fs.readdirSync(folderPath)
 		.filter(f => f.endsWith(".js"))
-		.forEach(f => this.register(new (require(`${folderPath}${folderPath.endsWith("/") ? "" : "/"}${file}`))()))
+		.forEach(f => this.register(new (require(`${folderPath}${folderPath.endsWith("/") ? "" : "/"}${f}`))()))
 	}
 
 	/**
