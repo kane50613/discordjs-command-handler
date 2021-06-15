@@ -49,10 +49,14 @@ class CommandHandler extends EventEmitter {
 				command = args[0]?.split(this.options.prefix)[1]
 			args = args.slice(1)
 
-			this.commands.get(command)?.execute(this.bot, m, args, m?.member, m?.guild)
-			.then(() => this.emit("execute", this.commands.get(command), m))
-			.catch((e) => this.emit("error", e, this.commands.get(command), m))
-			.finally(() => this.ratelimit?.updateRatelimit(m?.member))
+			try {
+				this.commands.get(command)?.execute(this.bot, m, args, m?.member, m?.guild)
+				.then(() => this.emit("execute", this.commands.get(command), m))
+				.catch((e) => this.emit("promiseError", e, this.commands.get(command), m))
+				.finally(() => this.ratelimit?.updateRatelimit(m?.member))
+			} catch (e) {
+				this.emit("error", e, this.commands.get(command), m)
+			}
 		})
 	}
 }

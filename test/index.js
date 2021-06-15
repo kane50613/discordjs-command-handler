@@ -11,6 +11,8 @@ const commandHandler = new CommandHandler(bot, {
 
 commandHandler.commands.register(require("./commands/ping"))
 
+commandHandler.on("error", (e) => console.error(e))
+
 commandHandler.on("ratelimit", (c, m) => console.log(c))
 
 bot.on('ready', () => console.log('bot ready'))
