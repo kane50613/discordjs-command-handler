@@ -14,7 +14,6 @@ class CommandManager {
 	register(command) {
 		if(Array.isArray(command)) command.forEach(cmd => this.register(cmd));
 
-		command = new command()
 		this.commands.push(command)
 
 		if(command?.group?.length > 0) {
@@ -33,16 +32,19 @@ class CommandManager {
 	 * @example commandHandler.commands.loadCommands("./commands")
 	 */
 	loadCommands(folderPath) {
-	  if (typeof folderPath === "string") throw new TypeError(`folderPath must be string, received ${typeof folderPath}`);
+		if (typeof folderPath === "string")
+			throw new TypeError(`folderPath must be string, received ${typeof folderPath}`)
 
-	  fs.readdir(folderPath, (err, files) => {
-      if (err) return console.error(err);
-      files.forEach(file => {
-        if (!file.endsWith(".js")) return;
-        let cmd = require(`${folderPath}${folderPath.endsWith("/") ? "" : "/"}${file}`);
-        this.register(cmd);
-      });
-    });
+		fs.readdir(folderPath, (err, files) => {
+			if (err) return console.error(err)
+
+			files.filter(f => f.endsWith(".js"))
+			.forEach(file =>
+				this.register(
+					new (require(`${folderPath}${folderPath.endsWith("/") ? "" : "/"}${file}`))()
+				)
+			)
+		})
 	}
 
 	/**
