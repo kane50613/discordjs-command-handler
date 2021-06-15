@@ -1,3 +1,4 @@
+const fs = require("fs");
 const Group = require("../Base/Group");
 
 class CommandManager {
@@ -11,8 +12,7 @@ class CommandManager {
 	 * @param command command to register
 	 */
 	register(command) {
-		if(Array.isArray(command))
-			return command.forEach(this.register)
+		if(Array.isArray(command)) command.forEach(cmd => this.register(cmd));
 
 		command = new command()
 		this.commands.push(command)
@@ -25,6 +25,24 @@ class CommandManager {
 			}
 			group.register(command)
 		}
+	}
+
+	/**
+	 * @description Register commands in folder
+	 * @param {String} folderPath Path to folder
+	 * @example commandHandler.commands.loadCommands("./commands")
+	 */
+	loadCommands(folderPath) {
+	  if (typeof folderPath === "string") throw new TypeError(`folderPath must be string, received ${typeof folderPath}`);
+
+	  fs.readdir(folderPath, (err, files) => {
+      if (err) return console.error(err);
+      files.forEach(file => {
+        if (!file.endsWith(".js")) return;
+        let cmd = require(`${folderPath}${folderPath.endsWith("/") ? "" : "/"}${file}`);
+        this.register(cmd);
+      });
+    });
 	}
 
 	/**
