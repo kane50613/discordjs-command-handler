@@ -32,19 +32,12 @@ class CommandManager {
 	 * @example commandHandler.commands.loadCommands("./commands")
 	 */
 	loadCommands(folderPath) {
-		if (typeof folderPath === "string")
+		if (typeof folderPath !== "string")
 			throw new TypeError(`folderPath must be string, received ${typeof folderPath}`)
 
-		fs.readdir(folderPath, (err, files) => {
-			if (err) return console.error(err)
-
-			files.filter(f => f.endsWith(".js"))
-			.forEach(file =>
-				this.register(
-					new (require(`${folderPath}${folderPath.endsWith("/") ? "" : "/"}${file}`))()
-				)
-			)
-		})
+		fs.readdirSync(folderPath)
+		.filter(f => f.endsWith(".js"))
+		.forEach(f => this.register(new (require(`${folderPath}${folderPath.endsWith("/") ? "" : "/"}${file}`))()))
 	}
 
 	/**
