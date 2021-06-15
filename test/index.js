@@ -9,7 +9,9 @@ const commandHandler = new CommandHandler(bot, {
 	}
 })
 
-commandHandler.commands.register(new (require("./commands/ping"))())
+// commandHandler.commands.register(new (require("./commands/ping"))())
+
+commandHandler.commands.loadCommands(("./commands"))
 
 commandHandler.on("error", (e) => console.error(e))
 

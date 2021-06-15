@@ -1,4 +1,5 @@
 const fs = require("fs");
+const path = require("path")
 const Group = require("../Base/Group");
 
 class CommandManager {
@@ -37,7 +38,7 @@ class CommandManager {
 
 		await fs.readdirSync(folderPath)
 		.filter(f => f.endsWith(".js"))
-		.forEach(f => this.register(new (require(`${folderPath}${folderPath.endsWith("/") ? "" : "/"}${f}`))()))
+		.forEach(f => this.register(new (require(path.resolve("./", `${folderPath}${folderPath.endsWith("/") ? "" : "/"}${f}`)))()))
 	}
 
 	/**
