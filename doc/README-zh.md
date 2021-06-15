@@ -41,8 +41,11 @@ const commandHandler = new CommandHandler(bot, {
     // 選項
 })
 
+// 註冊整個資料夾的指令
+commandHandler.commands.loadCommands("./commands")
+
 // 註冊一個指令
-commandHandler.commands.register(ping)
+commandHandler.commands.register(new ping())
 
 // 或是一次註冊多個指令
 commandHandler.commands.register([ping, ..., ...])

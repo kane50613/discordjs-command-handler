@@ -41,8 +41,11 @@ const commandHandler = new CommandHandler(bot, {
     // options
 })
 
+// load a whole folder's commands
+commandHandler.commands.loadCommands("./commands")
+
 // register a command
-commandHandler.commands.register(ping)
+commandHandler.commands.register(new ping())
 
 // or register multiple command at the same time
 commandHandler.commands.register([ping, ..., ...])
