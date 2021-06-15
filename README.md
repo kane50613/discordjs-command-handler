@@ -22,6 +22,8 @@ npm test
 - easy to set up
 - works perfectly with discord.js
 - **ratelimit support**
+- **error handling with event**
+- event listening
 - commands group support
 
 ## Usage
@@ -85,6 +87,7 @@ dm | user execute a command in dm | Message
 ratelimit | user get ratelimited | Millisecond, Message
 execute | command successfully executed | Command, Message
 error | command execute error | Error, Command, Message
+promiseError | promise rejection | Error, Command, Message
 
 ## Reference
 ### options
