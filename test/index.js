@@ -1,8 +1,7 @@
-const CommandHandler = require('../CommandHandler')
 const Discord = require('discord.js')
 
 const bot = new Discord.Client()
-const commandHandler = new CommandHandler(bot, {
+require("../index")(bot, {
 	prefix: '.',
 	ratelimit: {
 		enable: true
