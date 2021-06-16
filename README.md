@@ -30,14 +30,13 @@ npm test
 ## Usage
 basic how to initialize with [options](#options)
 ```js
-const CommandHandler = require('@gary50613/djs-command-handler')
 const Discord = require('discord.js')
 
 // import a command
 const ping = require("./commands/ping")
 
 const bot = new Discord.Client()
-require("../index")(bot, {
+require("@gary50613/djs-command-handler")(bot, {
 	prefix: '.',
 	// options
 })
@@ -61,7 +60,7 @@ bot.login(process.env.TOKEN)
 
 make a command
 ```js
-const Command = require("@gary50613/djs-command-handler").Command
+const Command = require("@gary50613/djs-command-handler/Base/Command")
 
 class Ping extends Command {
     constructor() {
