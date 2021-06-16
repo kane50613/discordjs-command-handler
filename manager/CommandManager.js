@@ -46,7 +46,7 @@ class CommandManager extends EventEmitter {
 	 * @description register command
 	 * @param command command to register
 	 */
-	register(command) {
+	async register(command) {
 		if(Array.isArray(command)) command.forEach(cmd => this.register(cmd));
 
 		if(!command instanceof Command)

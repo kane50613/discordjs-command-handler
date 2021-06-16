@@ -14,6 +14,8 @@ bot.commands.on("error", (e) => console.error(e))
 
 bot.commands.on("ratelimit", (c, m) => console.log(c))
 
+bot.interaction.register(new (require("./interactions/ping"))())
+
 bot.on('ready', () => console.log('bot ready'))
 
 bot.login(process.env.TOKEN)

@@ -28,7 +28,6 @@
   },
   "homepage": "https://github.com/Gary50613/discordjs-command-handler#readme",
   "dependencies": {
-    "discord-slash-commands-client": "^1.2.1",
     "discord.js": "^12.5.3"
   }
 }
