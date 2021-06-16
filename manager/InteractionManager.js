@@ -5,7 +5,7 @@ class InteractionManager extends EventEmitter {
 	constructor(bot, options) {
 		super()
 
-		this.interactions = []
+		this.interactions = new Map()
 		this.bot = bot
 
 		bot.on("ready", () => this.init(bot, options))
@@ -15,15 +15,16 @@ class InteractionManager extends EventEmitter {
 		this.interactions.forEach(c => this._createCommand(c))
 
 		bot.ws.on("INTERACTION_CREATE", async (interaction) => {
-			console.log(interaction)
-			bot.api.interactions(interaction.id, interaction.token).callback.post({
+			interaction.reply = (content) => bot.api.interactions(interaction.id, interaction.token).callback.post({
 				data: {
 					type: 4,
 					data: {
-						content: 'pog'
+						content
 					}
 				}
 			})
+
+			this.interactions.get(interaction?.data?.name)?.execute(bot, interaction, interaction.member)
 		})
 	}
 
@@ -32,7 +33,7 @@ class InteractionManager extends EventEmitter {
 			return interaction.forEach(this.register)
 		if(!interaction instanceof Interaction)
 			throw new TypeError(`interaction must be Interaction`)
-		this.interactions.push(interaction)
+		this.interactions.set(interaction?.name, interaction)
 	}
 
 	async _createCommand(command) {

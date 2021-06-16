@@ -25,6 +25,7 @@ npm test
 - **error handling with event**
 - event listening
 - commands group support
+- **SLASH COMMAND SUPPORT (beta)**
 
 ## Usage
 basic how to initialize with [options](#options)
@@ -36,22 +37,22 @@ const Discord = require('discord.js')
 const ping = require("./commands/ping")
 
 const bot = new Discord.Client()
-const commandHandler = new CommandHandler(bot, {
-    prefix: "."
-    // options
+require("../index")(bot, {
+	prefix: '.',
+	// options
 })
 
 // load a whole folder's commands
-commandHandler.commands.loadCommands("./commands")
+bot.commands.loadCommands("./commands")
 
 // register a command
-commandHandler.commands.register(new ping())
+bot.commands.register(new ping())
 
 // or register multiple command at the same time
-commandHandler.commands.register([ping, ..., ...])
+bot.commands.register([ping, ..., ...])
 
 // listen to event
-commandHandler.on("dm", (m) => {
+bot.commands.on("dm", (m) => {
     m.channel.send("u can only use command in a guild!")
 })
 
