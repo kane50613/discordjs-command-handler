@@ -8,13 +8,11 @@ require("../index")(bot, {
 	}
 })
 
-// commandHandler.commands.register(new (require("./commands/ping"))())
+bot.commands.register(new (require("./commands/ping"))())
 
-commandHandler.commands.loadCommands(("./commands"))
+bot.commands.on("error", (e) => console.error(e))
 
-commandHandler.on("error", (e) => console.error(e))
-
-commandHandler.on("ratelimit", (c, m) => console.log(c))
+bot.commands.on("ratelimit", (c, m) => console.log(c))
 
 bot.on('ready', () => console.log('bot ready'))
 

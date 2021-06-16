@@ -1,13 +1,20 @@
 const fs = require("fs");
 const path = require("path")
 const Group = require("../Base/Group")
+const RatelimitManager = require("./RatelimitManager")
+const Command = require("../Base/Command")
 
 const EventEmitter = require("events").EventEmitter
 
 class CommandManager extends EventEmitter {
 	constructor(bot, options) {
+		super()
+
 		this.commands = []
 		this.groups = new Map()
+
+		if(options?.ratelimit?.enable)
+			this.ratelimit = new RatelimitManager(options?.ratelimit)
 
 		bot.on("message", async (m) => {
 			if(!m?.content.startsWith(options?.prefix))
@@ -17,20 +24,20 @@ class CommandManager extends EventEmitter {
 			if(!options?.dm && m?.channel?.type === "dm")
 				return this.emit("dm", m)
 
-			if(this.ratelimit?.isRatelimited(m?.member))
-				return this.emit("ratelimit", this.ratelimit.getRatelimit(m?.member), m)
+			if(this?.ratelimit?.isRatelimited(m?.member))
+				return this.emit("ratelimit", this?.ratelimit?.getRatelimit(m?.member), m)
 
-			let args = m.content?.split(" "),
+			let args = m?.content?.split(" "),
 				command = args[0]?.split(options.prefix)[1]
 			args = args.slice(1)
 
 			try {
-				this.commands.get(command)?.execute(this.bot, m, args, m?.member, m?.guild)
-				.then(() => this.emit("execute", this.commands.get(command), m))
-				.catch((e) => this.emit("promiseError", e, this.commands.get(command), m))
-				.finally(() => this.ratelimit?.updateRatelimit(m?.member))
+				bot.commands.get(command)?.execute(bot, m, args, m?.member, m?.guild)
+				.then(() => this.emit("execute", bot.commands.get(command), m))
+				.catch((e) => this.emit("promiseError", e, bot.commands.get(command), m))
+				.finally(() => bot.ratelimit?.updateRatelimit(m?.member))
 			} catch (e) {
-				this.emit("error", e, this.commands.get(command), m)
+				this.emit("error", e, bot.commands.get(command), m)
 			}
 		})
 	}
@@ -41,6 +48,9 @@ class CommandManager extends EventEmitter {
 	 */
 	register(command) {
 		if(Array.isArray(command)) command.forEach(cmd => this.register(cmd));
+
+		if(!command instanceof Command)
+			throw new TypeError(`command must be Command`)
 
 		this.commands.push(command)
 

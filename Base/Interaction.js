@@ -1,10 +1,8 @@
 class Interaction {
-	constructor(name, args, description, usage, group) {
+	constructor(name, description, options) {
 		this.name = name.toLowerCase()
-		this.args = args || {}
 		this.description = description || ""
-		this.usage = usage || ""
-		this.group = group
+		this.options = options || []
 	}
 
 	async execute(bot, interaction) {

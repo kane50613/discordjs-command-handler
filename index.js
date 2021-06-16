@@ -16,6 +16,7 @@ let defaultOptions = {
 	prefix: "PREFIX",
 	dm: false,
 	bot: false,
+	command: true,
 	interaction: true
 }
 
@@ -23,10 +24,8 @@ module.exports = (bot, options) => {
 	if(options && Util.isObject(options))
 		defaultOptions = Util.assignObject(defaultOptions, options)
 
-	bot.commands = new CommandManager(bot, defaultOptions)
-
-	if(defaultOptions?.ratelimit?.enable)
-		bot.ratelimit = new RatelimitManager(bot, defaultOptions?.ratelimit)
+	if(defaultOptions?.command)
+		bot.commands = new CommandManager(bot, defaultOptions)
 
 	if(defaultOptions?.interaction)
 		bot.interaction = new InteractionManager(bot, defaultOptions)
