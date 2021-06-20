@@ -4,7 +4,7 @@ class Command {
 		this.description = description || ""
 		this.usage = usage || ""
 		this.group = group
-		this.alias = alias.map(x => x.toLowerCase()) || []
+		this.alias = alias?.map(x => x.toLowerCase()) || []
 	}
 
 	async execute(bot, message, args, member, guild) {
