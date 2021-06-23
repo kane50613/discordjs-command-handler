@@ -1,4 +1,5 @@
 const Interaction = require("../../Base/Interaction")
+const Discord = require("discord.js")
 
 class Ping extends Interaction {
 	constructor() {
@@ -10,6 +11,10 @@ class Ping extends Interaction {
 
 	async execute(bot, interaction, options, member) {
 		let emb = await interaction.reply("pog!")
+		await emb.edit({
+			embed: new Discord.MessageEmbed()
+				.setTitle("pog!")
+		})
 		await emb.delete()
 	}
 }

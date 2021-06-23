@@ -12,6 +12,11 @@ class InteractionHandler {
 		this.interaction = interaction
 	}
 
+	/**
+	 * @param content
+	 * @param publicVisible whether the message is visible to everyone
+	 * @return {Promise<InteractionResponse>}
+	 */
 	reply = async (content, publicVisible = false) => {
 		let data = {
 			data: {
@@ -33,6 +38,10 @@ class InteractionHandler {
 		return reply
 	}
 
+	/**
+	 * @param publicVisible whether the message is visible to everyone
+	 * @return {Promise<*>}
+	 */
 	thinking = async (publicVisible) => {
 		if(this.#firstReply)
 			return
@@ -55,8 +64,8 @@ class InteractionHandler {
 	buildInteractionData(content) {
 		if(content instanceof MessageEmbed)
 			content = { embeds: [content] }
-		if(content.embed)
-			content = { embeds: [content.embed], content: content?.content }
+		if(content?.embed)
+			content = { ...content, embeds: [content.embed], content: content?.content, embed: undefined }
 		return typeof content === "string" ? { content } : content
 	}
 }
