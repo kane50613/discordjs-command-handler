@@ -18,13 +18,11 @@ class InteractionManager extends EventEmitter {
 			interaction.reply = (content) => bot.api.interactions(interaction.id, interaction.token).callback.post({
 				data: {
 					type: 4,
-					data: {
-						content
-					}
+					data: typeof content === "string" ? { content } : content
 				}
 			})
 
-			this.interactions.get(interaction?.data?.name)?.execute(bot, interaction, interaction.member)
+			this.interactions.get(interaction?.data?.name)?.execute(bot, interaction, interaction?.data?.options, interaction.member)
 		})
 	}
 

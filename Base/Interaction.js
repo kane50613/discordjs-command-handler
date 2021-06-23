@@ -5,7 +5,7 @@ class Interaction {
 		this.options = options || []
 	}
 
-	async execute(bot, interaction, member) {
+	async execute(bot, interaction, options, member) {
 
 	}
 }

@@ -8,7 +8,7 @@ class Ping extends Interaction {
 		)
 	}
 
-	async execute(bot, interaction, member) {
+	async execute(bot, interaction, options, member) {
 		interaction.reply("pog!")
 	}
 }
