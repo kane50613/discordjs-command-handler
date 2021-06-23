@@ -2,6 +2,9 @@ const Interaction = require("../Base/Interaction")
 const EventEmitter = require("events").EventEmitter
 
 class InteractionManager extends EventEmitter {
+
+	EPHEMERAL_FLAG_ID = 64
+
 	constructor(bot, options) {
 		super()
 
@@ -15,12 +18,23 @@ class InteractionManager extends EventEmitter {
 		this.interactions.forEach(c => this._createCommand(c))
 
 		bot.ws.on("INTERACTION_CREATE", async (interaction) => {
-			interaction.reply = (content) => bot.api.interactions(interaction.id, interaction.token).callback.post({
-				data: {
-					type: 4,
-					data: typeof content === "string" ? { content } : content
+			let firstReply = true
+			interaction.reply = (content, publicVisible = false) => {
+				let data = {
+					data: {
+						type: 4,
+						data: typeof content === "string" ? { content } : content,
+						flags: publicVisible ? this.EPHEMERAL_FLAG_ID : null
+					}
 				}
-			})
+
+				let reply = firstReply ?
+					bot.api.interactions(interaction?.id, interaction?.token)?.callback?.post(data) :
+					bot.api.webhooks(bot?.user?.id, interaction?.token)?.post(data)
+				firstReply = true
+
+				return reply.then(r => r?.id ?? "@original")
+			}
 
 			this.interactions.get(interaction?.data?.name)?.execute(bot, interaction, interaction?.data?.options, interaction.member)
 		})

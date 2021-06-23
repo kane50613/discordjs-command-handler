@@ -1,6 +1,6 @@
 {
   "name": "@gary50613/discord.js-command-handler",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "simple discord.js command handler",
   "main": "CommandHandler.js",
   "directories": {
