@@ -1,15 +1,16 @@
-const Interaction = require("../../Base/Interaction");
+const Interaction = require("../../Base/Interaction")
 
 class Ping extends Interaction {
 	constructor() {
 		super(
-			"ping",
+			"pong",
 			"取得機器人延遲"
 		)
 	}
 
 	async execute(bot, interaction, options, member) {
-		interaction.reply("pog!")
+		let emb = await interaction.reply("pog!")
+		await emb.delete()
 	}
 }
 

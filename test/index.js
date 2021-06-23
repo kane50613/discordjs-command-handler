@@ -11,6 +11,7 @@ require("../index")(bot, {
 bot.commands.register(new (require("./commands/ping"))())
 
 bot.commands.on("error", (e) => console.error(e))
+bot.commands.on("promiseError", (e) => console.error(e))
 
 bot.commands.on("ratelimit", (c, m) => console.log(c))
 
