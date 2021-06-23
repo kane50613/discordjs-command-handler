@@ -1,8 +1,8 @@
 {
   "name": "@gary50613/discord.js-command-handler",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "simple discord.js command handler",
-  "main": "CommandHandler.js",
+  "main": "index.js",
   "directories": {
     "doc": "doc",
     "test": "test"
@@ -19,7 +19,9 @@
     "discordjs",
     "command",
     "ratelimit",
-    "handler"
+    "handler",
+    "interaction",
+    "slash"
   ],
   "author": "Gary50613",
   "license": "ISC",

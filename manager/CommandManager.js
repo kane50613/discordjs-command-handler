@@ -33,9 +33,9 @@ class CommandManager extends EventEmitter {
 
 			try {
 				bot.commands.get(command)?.execute(bot, m, args, m?.member, m?.guild)
-				.then(() => this.emit("execute", bot.commands.get(command), m))
-				.catch((e) => this.emit("promiseError", e, bot.commands.get(command), m))
-				.finally(() => bot.ratelimit?.updateRatelimit(m?.member))
+					.then(() => this.emit("execute", bot.commands.get(command), m))
+					.catch((e) => this.emit("promiseError", e, bot.commands.get(command), m))
+					.finally(() => bot.ratelimit?.updateRatelimit(m?.member))
 			} catch (e) {
 				this.emit("error", e, bot.commands.get(command), m)
 			}
