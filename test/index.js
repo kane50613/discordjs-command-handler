@@ -19,7 +19,9 @@ bot.interaction.register(new (require("./interactions/ping"))())
 
 bot.on('ready', () => {
 	console.log('bot ready')
-	process.exit(1)
 })
 
-bot.login(process.env.TOKEN)
+bot.login(process.env.TOKEN).catch(e => {
+	console.error(e)
+	process.exit(1)
+})
