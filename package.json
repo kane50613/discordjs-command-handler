@@ -8,6 +8,7 @@
     "test": "test"
   },
   "scripts": {
+    "build": "npm i --save-dev",
     "test": "cd test && node index"
   },
   "repository": {
@@ -29,7 +30,7 @@
     "url": "https://github.com/Gary50613/discordjs-command-handler/issues"
   },
   "homepage": "https://github.com/Gary50613/discordjs-command-handler#readme",
-  "dependencies": {
+  "devDependencies": {
     "discord.js": "^12.5.3"
   }
 }
