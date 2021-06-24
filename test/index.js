@@ -17,6 +17,9 @@ bot.commands.on("ratelimit", (c, m) => console.log(c))
 
 bot.interaction.register(new (require("./interactions/ping"))())
 
-bot.on('ready', () => console.log('bot ready'))
+bot.on('ready', () => {
+	console.log('bot ready')
+	process.exit(1)
+})
 
 bot.login(process.env.TOKEN)
