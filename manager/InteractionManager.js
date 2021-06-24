@@ -22,7 +22,7 @@ class InteractionManager extends EventEmitter {
 			if(executor) {
 				try {
 					let handler = new InteractionHandler(bot, interaction)
-					executor.execute(bot, handler, interaction?.data?.options, interaction?.member)
+					executor.execute(bot, handler, interaction?.data?.options)
 						.then(() => this.emit("execute", executor, handler))
 						.catch((e) => this.emit("promiseError", e, executor, handler))
 				} catch(e) {

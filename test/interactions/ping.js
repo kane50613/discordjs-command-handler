@@ -9,7 +9,7 @@ class Ping extends Interaction {
 		)
 	}
 
-	async execute(bot, interaction, options, member) {
+	async execute(bot, interaction, options) {
 		let emb = await interaction.reply("pog!")
 		await emb.edit({
 			embed: new Discord.MessageEmbed()
