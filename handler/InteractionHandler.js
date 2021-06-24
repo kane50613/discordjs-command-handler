@@ -10,6 +10,13 @@ class InteractionHandler {
 	constructor(bot, interaction) {
 		this.bot = bot
 		this.interaction = interaction
+
+		if(this.interaction?.member)
+			this.member = this.interaction.member
+		if(this.interaction?.guild_id)
+			this.guild = bot.guilds.cache.get(this.interaction?.guild_id)
+		if(this.interaction?.channel_id)
+			this.channel = bot.channels.cache.get(this.interaction?.channel_id)
 	}
 
 	/**

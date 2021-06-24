@@ -17,7 +17,6 @@ class InteractionManager extends EventEmitter {
 		this.interactions.forEach(c => this._createCommand(c))
 
 		bot.ws.on("INTERACTION_CREATE", async (interaction) => {
-
 			let executor = this.interactions.get(interaction?.data?.name)
 
 			if(executor) {
