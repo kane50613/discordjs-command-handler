@@ -43,14 +43,14 @@ declare module "@gary50613/discord.js-command-handler" {
         public register(command: string): void
     }
 
-    export class Interaction {
+    class Interaction {
         public name: string
         public description: string;
         public options: any[]
         public execute(bot:Client, interaction:any, options:any, member:any):Promise<any>
     }
 
-    export class InteractionResponse {
+    class InteractionResponse {
         public bot: Client;
         public interaction: any;
         public message: any
@@ -60,12 +60,12 @@ declare module "@gary50613/discord.js-command-handler" {
         public constructor(bot: Client, interaction: any, message: any)
     }
 
-    export class User {
+    class User {
         public id: string;
         public lastMessage: number;
     }
 
-    export class CommandManager extends EventEmitter {
+    class CommandManager extends EventEmitter {
         public commands: Command[]
         public groups: Map<string, Group>
         public register(command: Command | Command[]): this
@@ -74,7 +74,7 @@ declare module "@gary50613/discord.js-command-handler" {
         public getGroup(groupName: string): Group
     }
 
-    export class InteractionManager extends EventEmitter {
+    class InteractionManager extends EventEmitter {
         public interactions: Map<string, Interaction>
         public bot: Client
         public constructor(bot: Client, options: RateLimitOptions)
@@ -83,7 +83,7 @@ declare module "@gary50613/discord.js-command-handler" {
         public _createCommand(command: any): Promise<void>
     }
 
-    export class RatelimitManager {
+    class RatelimitManager {
         public options: RateLimitOptions
         public ratelimit: Map<string, User>
         public isRatelimited(user: GuildMember): boolean

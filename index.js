@@ -32,3 +32,4 @@ module.exports = (bot, options) => {
 }
 
 module.exports.Command = require("./Base/Command")
+module.exports.Util = require("./Util")
