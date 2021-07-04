@@ -21,12 +21,14 @@ let defaultOptions = {
 }
 
 module.exports = (bot, options) => {
-	if(options && Util.isObject(options))
+	if (options && Util.isObject(options))
 		defaultOptions = Util.assignObject(defaultOptions, options)
 
-	if(defaultOptions?.command)
+	if (defaultOptions?.command)
 		bot.commands = new CommandManager(bot, defaultOptions)
 
-	if(defaultOptions?.interaction)
+	if (defaultOptions?.interaction)
 		bot.interaction = new InteractionManager(bot, defaultOptions)
 }
+
+module.exports.Command = require("./Base/Command")

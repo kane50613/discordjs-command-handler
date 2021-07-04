@@ -76,8 +76,11 @@ class CommandManager extends EventEmitter {
 			throw new TypeError(`folderPath must be string, received ${typeof folderPath}`)
 
 		await fs.readdirSync(folderPath)
-		.filter(f => f.endsWith(".js"))
-		.forEach(f => this.register(new (require(path.resolve("./", `${folderPath}${folderPath.endsWith("/") ? "" : "/"}${f}`)))()))
+		.filter(f => f.endsWith(".js") || f.endsWith(".ts"))
+		.forEach(f => {
+			const commandClass = require(path.resolve("./", `${folderPath}${folderPath.endsWith("/") ? "" : "/"}${f}`)).default ?? require(path.resolve("./", `${folderPath}${folderPath.endsWith("/") ? "" : "/"}${f}`))
+			this.register(new commandClass())
+		})
 	}
 
 	/**

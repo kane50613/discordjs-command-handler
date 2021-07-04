@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+        "module": "CommonJS",
+        "target": "ES2021",
+        "outDir": "dist",
+        "lib": [
+            "ESNext",
+            "ESNext.Symbol",
+            "ESNext.AsyncIterable",
+            "ESNext.Array",
+            "ESNext.Intl",
+            "DOM"
+        ],
+        "sourceMap": false,
+        "inlineSourceMap": true,
+        "inlineSources": true,
+        "incremental": true,
+        "esModuleInterop": true,
+    }
+}
