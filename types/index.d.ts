@@ -35,7 +35,7 @@ declare module "@gary50613/discord.js-command-handler" {
         public execute(bot: Client, message: Message, args: string[], member: GuildMember, guild: Guild): Promise<any>
     }
 
-    export class Group {
+    class Group {
         public name: string
         public description: string
         public commands: Command[]
@@ -47,7 +47,7 @@ declare module "@gary50613/discord.js-command-handler" {
         public name: string
         public description: string;
         public options: any[]
-
+        public execute(bot:Client, interaction:any, options:any, member:any):Promise<any>
     }
 
     export class InteractionResponse {
