@@ -134,6 +134,7 @@ export default class Ping extends Command {
     }
 
     public async execute(bot: Client, message: Message, args: string[], member: GuildMember, guild: Guild) {
+        // just write like normal discord.js
         message.reply("pong!")
     }
 }
