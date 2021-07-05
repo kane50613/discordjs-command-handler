@@ -4,7 +4,7 @@ import { EventEmitter } from "events"
 declare module "@gary50613/discord.js-command-handler" {
     export default function (client: Client, initOptions: initOption): void;
 
-    export type InteractionMessageContent = MessageEmbed | string | { embeds: MessageEmbed, content: string }
+    export type InteractionMessageContent = string | { embeds?: MessageEmbed, content: string }
 
     export interface RateLimitOptions {
         enable?: boolean
@@ -47,7 +47,7 @@ declare module "@gary50613/discord.js-command-handler" {
         public name: string
         public description: string;
         public options: any[]
-        public execute(bot:Client, interaction:any, options:any, member:any):Promise<any>
+        public execute(bot: Client, interaction: any, options: any, member: any): Promise<any>
     }
 
     class InteractionResponse {
@@ -65,11 +65,43 @@ declare module "@gary50613/discord.js-command-handler" {
         public lastMessage: number;
     }
 
+    class InteractionHandler {
+        public EPHEMERAL_FLAG_ID: number;
+        private firstReply: boolean;
+        public constructor(bot: Client, interaction: any)
+        /**
+	    * @param content
+	    * @param publicVisible whether the message is visible to everyone
+	    * @return {Promise<InteractionResponse>}
+	    */
+        public reply(content: any, publicVisible: boolean): Promise<InteractionResponse>
+        /**
+	    * @param publicVisible whether the message is visible to everyone
+	    * @return {Promise<*>}
+	    */
+        public thinking(publicVisible: boolean): Promise<any>
+        public buildInteractionData(content: any): InteractionResponse
+    }
+
     class CommandManager extends EventEmitter {
         public commands: Command[]
         public groups: Map<string, Group>
+        /**
+	    * @description register command
+	    * @param command command to register
+	    */
         public register(command: Command | Command[]): this
+        /**
+	    * @description Register commands in folder
+	    * @param {String} folderPath Path to folder
+	    * @example bot.commands.loadCommands("./commands")
+	    */
         public loadCommands(folderPath: string): Promise<void>
+        /**
+	    * @description return command by name or alias
+	    * @param name command's name or alias
+	    * @return command
+	    */
         public get(cmdName: string): Command
         public getGroup(groupName: string): Group
     }

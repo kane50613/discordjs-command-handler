@@ -13,23 +13,21 @@ class CommandManager extends EventEmitter {
 		this.commands = []
 		this.groups = new Map()
 
-		if(options?.ratelimit?.enable)
+		if (options?.ratelimit?.enable)
 			this.ratelimit = new RatelimitManager(options?.ratelimit)
 
 		bot.on("message", async (m) => {
-			if(!m?.content.startsWith(options?.prefix))
+			if (!m?.content.startsWith(options?.prefix))
 				return
-			if(!options?.bot && m?.author?.bot)
+			if (!options?.bot && m?.author?.bot)
 				return
-			if(!options?.dm && m?.channel?.type === "dm")
+			if (!options?.dm && m?.channel?.type === "dm")
 				return this.emit("dm", m)
 
-			if(this?.ratelimit?.isRatelimited(m?.member))
+			if (this?.ratelimit?.isRatelimited(m?.member))
 				return this.emit("ratelimit", this?.ratelimit?.getRatelimit(m?.member), m)
 
-			let args = m?.content?.split(" "),
-				command = args[0]?.split(options.prefix)[1]
-			args = args.slice(1)
+			const [command, ...args] = m.content.slice(options.prefix.length).trim().split(/ +/g)
 
 			try {
 				bot.commands.get(command)?.execute(bot, m, args, m?.member, m?.guild)
@@ -47,16 +45,16 @@ class CommandManager extends EventEmitter {
 	 * @param command command to register
 	 */
 	async register(command) {
-		if(Array.isArray(command)) command.forEach(cmd => this.register(cmd));
+		if (Array.isArray(command)) command.forEach(cmd => this.register(cmd));
 
-		if(!command instanceof Command)
+		if (!command instanceof Command)
 			throw new TypeError(`command must be Command`)
 
 		this.commands.push(command)
 
-		if(command?.group?.length > 0) {
+		if (command?.group?.length > 0) {
 			let group = this.groups.get(command?.group)
-			if(!group) {
+			if (!group) {
 				group = new Group(command?.group)
 				this.groups.set(command.group, group)
 			}
@@ -69,24 +67,24 @@ class CommandManager extends EventEmitter {
 	/**
 	 * @description Register commands in folder
 	 * @param {String} folderPath Path to folder
-	 * @example commandHandler.commands.loadCommands("./commands")
+	 * @example bot.commands.loadCommands("./commands")
 	 */
 	async loadCommands(folderPath) {
 		if (typeof folderPath !== "string")
 			throw new TypeError(`folderPath must be string, received ${typeof folderPath}`)
 
 		await fs.readdirSync(folderPath)
-		.filter(f => f.endsWith(".js") || f.endsWith(".ts"))
-		.forEach(f => {
-			const commandClass = require(path.resolve("./", `${folderPath}${folderPath.endsWith("/") ? "" : "/"}${f}`)).default ?? require(path.resolve("./", `${folderPath}${folderPath.endsWith("/") ? "" : "/"}${f}`))
-			this.register(new commandClass())
-		})
+			.filter(f => f.endsWith(".js") || f.endsWith(".ts"))
+			.forEach(f => {
+				const commandClass = require(path.resolve("./", `${folderPath}${folderPath.endsWith("/") ? "" : "/"}${f}`)).default ?? require(path.resolve("./", `${folderPath}${folderPath.endsWith("/") ? "" : "/"}${f}`))
+				this.register(new commandClass())
+			})
 	}
 
 	/**
 	 * @description return command by name or alias
 	 * @param name command's name or alias
-	 * @return boolean
+	 * @return command
 	 */
 	get(name) {
 		return this.commands.find((c) => c?.name === name.toLowerCase() || c?.alias?.includes(name.toLowerCase()))

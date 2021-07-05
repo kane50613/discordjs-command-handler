@@ -28,6 +28,8 @@ npm test
 - **SLASH COMMAND SUPPORT (beta)**
 
 ## Usage
+
+### JavaScript
 basic how to initialize with [options](#options)
 ```js
 const Discord = require('discord.js')
@@ -48,7 +50,7 @@ bot.commands.loadCommands("./commands")
 bot.commands.register(new ping())
 
 // or register multiple command at the same time
-bot.commands.register([ping, ..., ...])
+bot.commands.register([new ping(), ..., ...])
 
 // listen to event
 bot.commands.on("dm", (m) => {
@@ -60,7 +62,7 @@ bot.login(process.env.TOKEN)
 
 make a command
 ```js
-const Command = require("@gary50613/djs-command-handler/Base/Command")
+const { Command } = require("@gary50613/djs-command-handler")
 
 class Ping extends Command {
     constructor() {
@@ -74,7 +76,7 @@ class Ping extends Command {
     }
     
     // execute function to call
-    execute(bot, message, args, member, guild) {
+    async execute(bot, message, args, member, guild) {
         // just write like normal discord.js
         message.reply('pong!')
     }
@@ -82,6 +84,61 @@ class Ping extends Command {
 
 module.exports = Ping
 ```
+
+### TypeScript
+basic how to initialize with [options](#options)
+```ts
+import { Client } from "discord.js"
+import init from "@gary50613/discord.js-command-handler"
+
+// import a command
+import ping from "./commands/Ping"
+
+const bot = new Client()
+init(bot, {
+    prefix: ".",
+    // options
+})
+
+// load a whole folder's commands
+bot.commands.loadCommands("./commands")
+
+// register a command
+bot.commands.register(new ping())
+
+// or register multiple command at the same time
+bot.commands.register([new ping(), ..., ...])
+
+// listen to event
+bot.commands.on("dm", (m) => {
+    m.channel.send("u can only use command in a guild!")
+})
+
+bot.login(process.env.TOKEN)
+```
+
+make a command
+```ts
+import { Command } from "@gary50613/discord.js-command-handler";
+import { Client, Guild, GuildMember, Message } from "discord.js";
+
+export default class Ping extends Command {
+    public constructor() {
+        super(
+            "ping", // name
+            "ping the bot", // description
+            ".ping", // usage
+            "general", // group
+            ["pong"] // alias
+        );
+    }
+
+    public async execute(bot: Client, message: Message, args: string[], member: GuildMember, guild: Guild) {
+        message.reply("pong!")
+    }
+}
+```
+
 
 ## Event
 type | description | parameter
