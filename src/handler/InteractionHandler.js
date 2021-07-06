@@ -1,4 +1,4 @@
-const InteractionResponse = require("../Base/InteractionResponse")
+const InteractionResponse = require("../base/InteractionResponse")
 const { MessageEmbed } = require("discord.js")
 
 class InteractionHandler {

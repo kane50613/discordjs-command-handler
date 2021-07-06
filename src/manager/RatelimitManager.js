@@ -1,4 +1,4 @@
-const User = require("../Base/User")
+const User = require("../base/User")
 
 class RatelimitManager {
 	ratelimit = new Map()

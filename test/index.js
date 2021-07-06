@@ -1,7 +1,7 @@
 const Discord = require('discord.js')
 
 const bot = new Discord.Client()
-require("../index")(bot, {
+require("../src")(bot, {
 	prefix: '.',
 	ratelimit: {
 		enable: true

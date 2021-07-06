@@ -1,4 +1,4 @@
-const Interaction = require("../Base/Interaction")
+const Interaction = require("../base/Interaction")
 const InteractionHandler = require("../handler/InteractionHandler")
 const path = require('path')
 const fs = require("fs")

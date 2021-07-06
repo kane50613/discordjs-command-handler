@@ -1,4 +1,4 @@
-const Interaction = require("../../Base/Interaction")
+const Interaction = require("../../src/base/Interaction")
 const Discord = require("discord.js")
 
 class Ping extends Interaction {
