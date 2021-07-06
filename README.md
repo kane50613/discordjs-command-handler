@@ -50,7 +50,7 @@ bot.commands.loadCommands("./commands")
 bot.commands.register(new ping())
 
 // or register multiple command at the same time
-bot.commands.register([new ping(), ..., ...])
+bot.commands.register(new ping(), ..., ...)
 
 // listen to event
 bot.commands.on("dm", (m) => {
