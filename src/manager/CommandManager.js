@@ -1,9 +1,7 @@
-const fs = require("fs");
-const path = require("path")
 const Group = require("../base/Group")
 const RatelimitManager = require("./RatelimitManager")
 const Command = require("../base/Command")
-const Util = require("../Util");
+const Util = require("../Util")
 
 const EventEmitter = require("events").EventEmitter
 

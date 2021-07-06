@@ -48,7 +48,7 @@ export class Interaction {
     public name: string
     public description: string;
     public options: any[]
-    public execute(bot: Client, interaction: InteractionHandler, options: Object, member: GuildMember): Promise<any>
+    public execute(bot: Client, interaction: InteractionHandler, options: any, member: GuildMember): Promise<any>
 }
 
 export class InteractionResponse {

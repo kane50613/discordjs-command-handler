@@ -1,8 +1,6 @@
 const Interaction = require("../base/Interaction")
 const InteractionHandler = require("../handler/InteractionHandler")
-const path = require('path')
-const fs = require("fs")
-const Util = require("../Util");
+const Util = require("../Util")
 const EventEmitter = require("events").EventEmitter
 
 class InteractionManager extends EventEmitter {
