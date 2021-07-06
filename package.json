@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "types": "types/index.d.ts",
   "directories": {
-    "doc": "doc",
+    "doc": "docs",
     "test": "test"
   },
   "scripts": {
