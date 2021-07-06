@@ -44,7 +44,7 @@ class CommandManager extends EventEmitter {
 	 * @description register command
 	 * @param command command to register
 	 */
-	async register(...command) {
+	register(...command) {
 		if(Array.isArray(command[0]))
 			command = command[0]
 

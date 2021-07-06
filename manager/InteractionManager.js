@@ -34,7 +34,7 @@ class InteractionManager extends EventEmitter {
 		})
 	}
 
-	async register(...interaction) {
+	register(...interaction) {
 		if(Array.isArray(interaction[0]))
 			interaction = interaction[0]
 		interaction.forEach(int => {
@@ -42,6 +42,8 @@ class InteractionManager extends EventEmitter {
 				throw new TypeError(`interaction must be Interaction`)
 			this.interactions.set(int?.name, int)
 		})
+
+		return this
 	}
 
 	async loadFolder(folderPath) {
