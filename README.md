@@ -66,13 +66,13 @@ const { Command } = require("@gary50613/djs-command-handler")
 
 class Ping extends Command {
     constructor() {
-        super(
-            "ping", // name
-            "ping the bot", // description
-            ".ping", // usage
-            "general", // group
-            ["pong"] // alias
-        );
+        super({
+          name: "ping",
+          description: "ping the bot",
+          usage: ".ping",
+          group: "ganeral",
+          alias: ["pong"]
+        });
     }
     
     // execute function to call
@@ -124,13 +124,13 @@ import { Client, Guild, GuildMember, Message } from "discord.js";
 
 export default class Ping extends Command {
     public constructor() {
-        super(
-            "ping", // name
-            "ping the bot", // description
-            ".ping", // usage
-            "general", // group
-            ["pong"] // alias
-        );
+        super({
+          name: "ping",
+          description: "ping the bot",
+          usage: ".ping",
+          group: "ganeral",
+          alias: ["pong"]
+        });
     }
 
     public async execute(bot: Client, message: Message, args: string[], member: GuildMember, guild: Guild) {

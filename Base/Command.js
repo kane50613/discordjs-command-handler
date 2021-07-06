@@ -1,10 +1,10 @@
 class Command {
-	constructor(name, description, usage, group, alias) {
-		this.name = name.toLowerCase()
-		this.description = description || ""
-		this.usage = usage || ""
-		this.group = group
-		this.alias = alias?.map(x => x.toLowerCase()) || []
+	constructor(options) {
+		this.name = options.name.toLowerCase()
+		this.description = options.description || ""
+		this.usage = options.usage || ""
+		this.group = options.group
+		this.alias = options.alias?.map(x => x.toLowerCase()) || []
 	}
 
 	async execute(bot, message, args, member, guild) {
