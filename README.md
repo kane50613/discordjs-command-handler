@@ -101,7 +101,7 @@ init(bot, {
 })
 
 // load a whole folder's commands
-bot.commands.loadCommands("./commands")
+bot.commands.loadFolder("./commands")
 
 // register a command
 bot.commands.register(new ping())

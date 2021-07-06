@@ -69,14 +69,15 @@ class CommandManager extends EventEmitter {
 	 * @param {String} folderPath Path to folder
 	 * @example bot.commands.loadCommands("./commands")
 	 */
-	async loadCommands(folderPath) {
+	async loadFolder(folderPath) {
 		if (typeof folderPath !== "string")
 			throw new TypeError(`folderPath must be string, received ${typeof folderPath}`)
 
 		await fs.readdirSync(folderPath)
 			.filter(f => f.endsWith(".js") || f.endsWith(".ts"))
 			.forEach(f => {
-				const commandClass = require(path.resolve("./", `${folderPath}${folderPath.endsWith("/") ? "" : "/"}${f}`)).default ?? require(path.resolve("./", `${folderPath}${folderPath.endsWith("/") ? "" : "/"}${f}`))
+				const commandClass = require(path.resolve("./", `${folderPath}${folderPath.endsWith("/") ? "" : "/"}${f}`)).default ??
+					require(path.resolve("./", `${folderPath}${folderPath.endsWith("/") ? "" : "/"}${f}`))
 				this.register(new commandClass())
 			})
 	}

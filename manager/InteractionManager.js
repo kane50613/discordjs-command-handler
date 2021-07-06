@@ -1,5 +1,7 @@
 const Interaction = require("../Base/Interaction")
 const InteractionHandler = require("../handler/InteractionHandler")
+const path = require('path')
+const fs = require("fs")
 const EventEmitter = require("events").EventEmitter
 
 class InteractionManager extends EventEmitter {
@@ -38,6 +40,19 @@ class InteractionManager extends EventEmitter {
 		if(!interaction instanceof Interaction)
 			throw new TypeError(`interaction must be Interaction`)
 		this.interactions.set(interaction?.name, interaction)
+	}
+
+	async loadFolder(folderPath) {
+		if (typeof folderPath !== "string")
+			throw new TypeError(`folderPath must be string, received ${typeof folderPath}`)
+
+		await fs.readdirSync(folderPath)
+		.filter(f => f.endsWith(".js") || f.endsWith(".ts"))
+		.forEach(f => {
+			const interactionClass = require(path.resolve("./", `${folderPath}${folderPath.endsWith("/") ? "" : "/"}${f}`)).default ??
+				require(path.resolve("./", `${folderPath}${folderPath.endsWith("/") ? "" : "/"}${f}`))
+			this.register(new interactionClass())
+		})
 	}
 
 	async _createCommand(command) {
