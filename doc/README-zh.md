@@ -49,7 +49,7 @@ bot.commands.loadCommands("./commands")
 bot.commands.register(new ping())
 
 // 或是一次註冊多個指令
-bot.commands.register([new ping(), ..., ...])
+bot.commands.register(new ping(), ..., ...)
 
 // 監聽事件
 bot.commands.on("dm", (m) => {
@@ -106,7 +106,7 @@ bot.commands.loadCommands("./commands")
 bot.commands.register(new ping())
 
 // 或是一次註冊多個指令
-bot.commands.register([new ping(), ..., ...])
+bot.commands.register(new ping(), ..., ...)
 
 // 監聽事件
 bot.commands.on("dm", (m) => {
