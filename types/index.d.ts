@@ -90,7 +90,7 @@ declare module "@gary50613/discord.js-command-handler" {
 	    * @description register command
 	    * @param command command to register
 	    */
-        public register(command: Command | Command[]): this
+        public register(...command: Command[]): this
         /**
 	    * @description Register commands in folder
 	    * @param {String} folderPath Path to folder
