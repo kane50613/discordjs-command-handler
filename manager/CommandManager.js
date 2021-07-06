@@ -45,21 +45,24 @@ class CommandManager extends EventEmitter {
 	 * @param command command to register
 	 */
 	async register(...command) {
+		if(Array.isArray(command[0]))
+			command = command[0]
+
 		command.forEach(cmd => {
-  		if (!command instanceof Command)
-  			throw new TypeError(`command must be Command`)
-  
-  		this.commands.push(command)
-  
-  		if (command?.group?.length > 0) {
-  			let group = this.groups.get(command?.group)
-  			if (!group) {
-  				group = new Group(command?.group)
-  				this.groups.set(command.group, group)
-  			}
-  			group.register(command)
-  		}
-		});
+	        if (!cmd instanceof Command)
+	            throw new TypeError(`command must be Command`)
+
+	        this.commands.push(cmd)
+
+	        if (cmd?.group?.length > 0) {
+	            let group = this.groups.get(cmd?.group)
+	            if (!group) {
+	                group = new Group(cmd?.group)
+	                this.groups.set(cmd.group, group)
+	            }
+	            group.register(cmd)
+	        }
+		})
 
 		return this
 	}

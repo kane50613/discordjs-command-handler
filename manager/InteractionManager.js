@@ -34,12 +34,14 @@ class InteractionManager extends EventEmitter {
 		})
 	}
 
-	async register(interaction) {
-		if(Array.isArray(interaction))
-			return interaction.forEach(this.register)
-		if(!interaction instanceof Interaction)
-			throw new TypeError(`interaction must be Interaction`)
-		this.interactions.set(interaction?.name, interaction)
+	async register(...interaction) {
+		if(Array.isArray(interaction[0]))
+			interaction = interaction[0]
+		interaction.forEach(int => {
+			if(!int instanceof Interaction)
+				throw new TypeError(`interaction must be Interaction`)
+			this.interactions.set(int?.name, int)
+		})
 	}
 
 	async loadFolder(folderPath) {
