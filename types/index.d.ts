@@ -94,15 +94,15 @@ declare module "@gary50613/discord.js-command-handler" {
         /**
 	    * @description Register commands in folder
 	    * @param {String} folderPath Path to folder
-	    * @example bot.commands.loadCommands("./commands")
+	    * @example bot.commands.loadFolder("./commands")
 	    */
-        public loadFolder(folderPath: string): Promise<void>
+        public loadFolder(folderPath: string): void
         /**
 	    * @description return command by name or alias
 	    * @param name command's name or alias
 	    * @return command
 	    */
-        public get(cmdName: string): Command
+        public get(name: string): Command
         public getGroup(groupName: string): Group
     }
 
@@ -112,8 +112,7 @@ declare module "@gary50613/discord.js-command-handler" {
         public constructor(bot: Client, options: RateLimitOptions)
         public init(bot: Client, options: RateLimitOptions): Promise<void>
         public register(...interaction: Interaction[]): this
-        public loadFolder(folderPath: string):Promise<void>
-        public _createCommand(command: any): Promise<void>
+        public loadFolder(folderPath: string): void
     }
 
     class RatelimitManager {

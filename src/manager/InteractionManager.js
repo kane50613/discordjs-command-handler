@@ -56,7 +56,7 @@ class InteractionManager extends EventEmitter {
 	 * @param {String} folderPath Path to folder
 	 * @example bot.interaction.loadFolder("./commands")
 	 */
-	async loadFolder(folderPath) {
+	loadFolder(folderPath) {
 		this.register(Util.loadFolder(folderPath))
 	}
 

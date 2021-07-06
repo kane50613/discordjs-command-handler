@@ -73,7 +73,7 @@ class CommandManager extends EventEmitter {
 	 * @param {String} folderPath Path to folder
 	 * @example bot.commands.loadFolder("./commands")
 	 */
-	async loadFolder(folderPath) {
+	loadFolder(folderPath) {
 		this.register(Util.loadFolder(folderPath))
 	}
 
