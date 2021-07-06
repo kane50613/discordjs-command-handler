@@ -90,13 +90,13 @@ declare module "@gary50613/discord.js-command-handler" {
 	    * @description register command
 	    * @param command command to register
 	    */
-        public register(...command: Command[]): this
+        public register(...command: Command[]): Promise<this>
         /**
 	    * @description Register commands in folder
 	    * @param {String} folderPath Path to folder
 	    * @example bot.commands.loadCommands("./commands")
 	    */
-        public loadCommands(folderPath: string): Promise<void>
+        public loadFolder(folderPath: string): Promise<void>
         /**
 	    * @description return command by name or alias
 	    * @param name command's name or alias
