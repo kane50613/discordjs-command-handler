@@ -96,7 +96,7 @@ declare module "@gary50613/discord.js-command-handler" {
 	    * @param {String} folderPath Path to folder
 	    * @example bot.commands.loadCommands("./commands")
 	    */
-        public loadCommands(folderPath: string): Promise<void>
+        public loadFolder(folderPath: string): Promise<void>
         /**
 	    * @description return command by name or alias
 	    * @param name command's name or alias
