@@ -111,7 +111,8 @@ declare module "@gary50613/discord.js-command-handler" {
         public bot: Client
         public constructor(bot: Client, options: RateLimitOptions)
         public init(bot: Client, options: RateLimitOptions): Promise<void>
-        public register(interaction: Interaction): Promise<void>
+        public register(...interaction: Interaction[]): this
+        public loadFolder(folderPath: string):Promise<void>
         public _createCommand(command: any): Promise<void>
     }
 
