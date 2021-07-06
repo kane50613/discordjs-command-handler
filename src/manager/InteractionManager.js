@@ -2,6 +2,7 @@ const Interaction = require("../base/Interaction")
 const InteractionHandler = require("../handler/InteractionHandler")
 const path = require('path')
 const fs = require("fs")
+const Util = require("../Util");
 const EventEmitter = require("events").EventEmitter
 
 class InteractionManager extends EventEmitter {
@@ -34,6 +35,10 @@ class InteractionManager extends EventEmitter {
 		})
 	}
 
+	/**
+	 * @description register interaction
+	 * @param interaction interaction(s) to register
+	 */
 	register(...interaction) {
 		if(Array.isArray(interaction[0]))
 			interaction = interaction[0]
@@ -46,17 +51,13 @@ class InteractionManager extends EventEmitter {
 		return this
 	}
 
+	/**
+	 * @description Register interactions in folder
+	 * @param {String} folderPath Path to folder
+	 * @example bot.interaction.loadFolder("./commands")
+	 */
 	async loadFolder(folderPath) {
-		if (typeof folderPath !== "string")
-			throw new TypeError(`folderPath must be string, received ${typeof folderPath}`)
-
-		await fs.readdirSync(folderPath)
-		.filter(f => f.endsWith(".js") || f.endsWith(".ts"))
-		.forEach(f => {
-			const interactionClass = require(path.resolve("./", `${folderPath}${folderPath.endsWith("/") ? "" : "/"}${f}`)).default ??
-				require(path.resolve("./", `${folderPath}${folderPath.endsWith("/") ? "" : "/"}${f}`))
-			this.register(new interactionClass())
-		})
+		this.register(Util.loadFolder(folderPath))
 	}
 
 	async _createCommand(command) {

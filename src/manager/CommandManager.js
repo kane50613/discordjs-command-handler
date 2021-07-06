@@ -3,6 +3,7 @@ const path = require("path")
 const Group = require("../base/Group")
 const RatelimitManager = require("./RatelimitManager")
 const Command = require("../base/Command")
+const Util = require("../Util");
 
 const EventEmitter = require("events").EventEmitter
 
@@ -42,7 +43,7 @@ class CommandManager extends EventEmitter {
 
 	/**
 	 * @description register command
-	 * @param command command to register
+	 * @param command command(s) to register
 	 */
 	register(...command) {
 		if(Array.isArray(command[0]))
@@ -70,19 +71,10 @@ class CommandManager extends EventEmitter {
 	/**
 	 * @description Register commands in folder
 	 * @param {String} folderPath Path to folder
-	 * @example bot.commands.loadCommands("./commands")
+	 * @example bot.commands.loadFolder("./commands")
 	 */
 	async loadFolder(folderPath) {
-		if (typeof folderPath !== "string")
-			throw new TypeError(`folderPath must be string, received ${typeof folderPath}`)
-
-		await fs.readdirSync(folderPath)
-			.filter(f => f.endsWith(".js") || f.endsWith(".ts"))
-			.forEach(f => {
-				const commandClass = require(path.resolve("./", `${folderPath}${folderPath.endsWith("/") ? "" : "/"}${f}`)).default ??
-					require(path.resolve("./", `${folderPath}${folderPath.endsWith("/") ? "" : "/"}${f}`))
-				this.register(new commandClass())
-			})
+		this.register(Util.loadFolder(folderPath))
 	}
 
 	/**

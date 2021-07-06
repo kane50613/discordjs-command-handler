@@ -8,7 +8,9 @@ require("../src")(bot, {
 	}
 })
 
-bot.commands.register(new (require("./commands/ping"))())
+// bot.commands.register(new (require("./commands/ping"))())
+
+bot.commands.loadFolder('./commands')
 
 bot.commands.on("error", (e) => console.error(e))
 bot.commands.on("promiseError", (e) => console.error(e))

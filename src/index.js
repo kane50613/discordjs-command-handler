@@ -1,6 +1,6 @@
 const CommandManager = require("./manager/CommandManager")
 const InteractionManager = require("./manager/InteractionManager")
-const Util = require("../Util")
+const Util = require("./Util")
 
 let defaultOptions = {
 	ratelimit: {
@@ -31,4 +31,4 @@ module.exports = (bot, options) => {
 }
 
 module.exports.Command = require("./base/Command")
-module.exports.Util = require("../Util")
+module.exports.Util = require("./Util")
