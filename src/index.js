@@ -31,4 +31,5 @@ module.exports = (bot, options) => {
 }
 
 module.exports.Command = require("./base/Command")
+module.exports.Interaction = require("./base/Interaction")
 module.exports.Util = require("./Util")
