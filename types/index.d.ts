@@ -47,8 +47,8 @@ export class Group {
 export class Interaction {
     public name: string
     public description: string;
-    public options: any[]
-    public constructor(name: string, description: string, options: string[])
+    public options?: any[]
+    public constructor(name: string, description: string, options?: string[])
     public execute(bot: Client, interaction: InteractionHandler, options: any, member: GuildMember): Promise<any>
 }
 
@@ -76,12 +76,12 @@ export class InteractionHandler {
      * @param publicVisible whether the message is visible to everyone
      * @return {Promise<InteractionResponse>}
      */
-    public reply(content: any, publicVisible: boolean): Promise<InteractionResponse>
+    public reply(content: any, publicVisible?: boolean): Promise<InteractionResponse>
     /**
      * @param publicVisible whether the message is visible to everyone
      * @return {Promise<*>}
      */
-    public thinking(publicVisible: boolean): Promise<any>
+    public thinking(publicVisible?: boolean): Promise<any>
     public buildInteractionData(content: any): InteractionResponse
 }
 
