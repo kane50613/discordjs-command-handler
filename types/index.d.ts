@@ -48,6 +48,7 @@ export class Interaction {
     public name: string
     public description: string;
     public options: any[]
+    public constructor(name: string, description: string, options: string[])
     public execute(bot: Client, interaction: InteractionHandler, options: any, member: GuildMember): Promise<any>
 }
 
