@@ -36,7 +36,7 @@ export class Command {
     public execute(bot: Client, message: Message, args: string[], member: GuildMember, guild: Guild): Promise<any>
 }
 
-export class Group {
+declare class Group {
     public name: string
     public description: string
     public commands: Command[]
@@ -52,7 +52,7 @@ export class Interaction {
     public execute(bot: Client, interaction: InteractionHandler, options: any, member: GuildMember): Promise<any>
 }
 
-export class InteractionResponse {
+declare class InteractionResponse {
     public bot: Client;
     public interaction: any;
     public message: any
@@ -62,12 +62,12 @@ export class InteractionResponse {
     public constructor(bot: Client, interaction: any, message: any)
 }
 
-export class User {
+declare class User {
     public id: string;
     public lastMessage: number;
 }
 
-export class InteractionHandler {
+declare class InteractionHandler {
     public EPHEMERAL_FLAG_ID: number;
     private firstReply: boolean;
     public constructor(bot: Client, interaction: any)
@@ -85,7 +85,7 @@ export class InteractionHandler {
     public buildInteractionData(content: any): InteractionResponse
 }
 
-export class CommandManager extends EventEmitter {
+declare class CommandManager extends EventEmitter {
     public commands: Command[]
     public groups: Map<string, Group>
     /**
@@ -110,7 +110,7 @@ export class CommandManager extends EventEmitter {
     public ratelimit?: RatelimitManager
 }
 
-export class InteractionManager extends EventEmitter {
+declare class InteractionManager extends EventEmitter {
     public interactions: Map<string, Interaction>
     public bot: Client
     public constructor(bot: Client, options: RateLimitOptions)
@@ -119,7 +119,7 @@ export class InteractionManager extends EventEmitter {
     public loadFolder(folderPath: string): void
 }
 
-export class RatelimitManager {
+declare class RatelimitManager {
     public options: RateLimitOptions
     public ratelimit: Map<string, User>
     public isRatelimited(user: GuildMember): boolean
