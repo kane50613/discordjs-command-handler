@@ -127,6 +127,12 @@ declare class RatelimitManager {
     public updateRatelimit(user: GuildMember): void
 }
 
+export class Util{
+    public static isObject(o:any):boolean
+    public static assignObject<K,T extends Object>(o:K,t:T):K|T
+    public static loadFolder(fPath:string)
+}
+
 declare module "discord.js" {
     export interface Client {
         commands: CommandManager
