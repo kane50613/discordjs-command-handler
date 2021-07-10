@@ -36,7 +36,7 @@ export class Command {
     public execute(bot: Client, message: Message, args: string[], member: GuildMember, guild: Guild): Promise<any>
 }
 
-declare class Group {
+export class Group {
     public name: string
     public description: string
     public commands: Command[]
