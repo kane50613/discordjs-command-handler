@@ -30,6 +30,7 @@ module.exports = (bot, options) => {
 		bot.interaction = new InteractionManager(bot, defaultOptions)
 }
 
+module.exports.Group = require("./base/Group")
 module.exports.Command = require("./base/Command")
 module.exports.Interaction = require("./base/Interaction")
 module.exports.Util = require("./Util")
