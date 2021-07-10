@@ -129,7 +129,7 @@ declare class RatelimitManager {
 
 export class Util{
     public static isObject(o:any):boolean
-    public static assignObject<K,T extends Object>(o:K,t:T):K|T
+    public static assignObject<K,T extends Object>(o:K,t:T):K&T
     public static loadFolder(fPath:string):Command[]
 }
 
