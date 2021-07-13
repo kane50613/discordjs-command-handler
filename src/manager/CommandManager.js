@@ -2,10 +2,9 @@ const Group = require("../base/Group")
 const RatelimitManager = require("./RatelimitManager")
 const Command = require("../base/Command")
 const Util = require("../Util")
+const EventHandler = require("../handler/EventHandler")
 
-const EventEmitter = require("events").EventEmitter
-
-class CommandManager extends EventEmitter {
+class CommandManager extends EventHandler {
 	constructor(bot, options) {
 		super()
 
