@@ -1,4 +1,4 @@
-# djs-command-handler
+# discord.js-command-handler
 > Simple command handler for discord.js
 
 [繁體中文](docs/README-zh.md)
