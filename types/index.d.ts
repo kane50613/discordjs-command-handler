@@ -1,5 +1,4 @@
 import { Message, MessageEmbed, Client, PermissionResolvable, GuildMember, Guild } from "discord.js"
-import { EventEmitter } from "events"
 
 declare module "@gary50613/discord.js-command-handler" {
     export default function (client: Client, initOptions: initOption): void;
@@ -85,7 +84,12 @@ declare class InteractionHandler {
     public buildInteractionData(content: any): InteractionResponse
 }
 
-declare class CommandManager extends EventEmitter {
+declare class EventHandler {
+    public emit(name: string, ...args: any): void
+    public removeListener(name: string, listener: void): void
+}
+
+declare class CommandManager extends EventHandler {
     public commands: Command[]
     public groups: Map<string, Group>
     /**
@@ -107,16 +111,24 @@ declare class CommandManager extends EventEmitter {
     public get(name: string): Command
     public getGroup(groupName: string): Group
 
+    public on(name: 'dm', listener: (message: Message) => void): this
+    public on(name: 'ratelimit', listener: (time: number) => void): this
+    public on(name: 'execute', listener: (command: Command, message: Message) => void): this
+    public on(name: 'error' | 'promiseError', listener: (error: Error, command: Command, message: Message) => void): this
+
     public ratelimit?: RatelimitManager
 }
 
-declare class InteractionManager extends EventEmitter {
+declare class InteractionManager extends EventHandler {
     public interactions: Map<string, Interaction>
     public bot: Client
     public constructor(bot: Client, options: RateLimitOptions)
     public init(bot: Client, options: RateLimitOptions): Promise<void>
     public register(...interaction: Interaction[]): this
     public loadFolder(folderPath: string): void
+
+    public on(name: 'execute', listener: (executor: Interaction, handler: InteractionHandler) => void): this
+    public on(name: 'error' | 'promiseError', listener: (error: Error, executor: Interaction, handler: InteractionHandler) => void): this
 }
 
 declare class RatelimitManager {

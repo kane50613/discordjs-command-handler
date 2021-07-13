@@ -3,6 +3,7 @@ class EventHandler {
 
 	on(name, listener) {
 		this._events[name] = [...this._events[name] ?? [], listener]
+		return this
 	}
 
 	emit(name, ...args) {
