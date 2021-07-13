@@ -1,9 +1,9 @@
 const Interaction = require("../base/Interaction")
 const InteractionHandler = require("../handler/InteractionHandler")
 const Util = require("../Util")
-const EventHandler = require("../handler/EventHandler")
+const {EventEmitter} = require("events")
 
-class InteractionManager extends EventHandler {
+class InteractionManager extends EventEmitter {
 
 	constructor(bot, options) {
 		super()
