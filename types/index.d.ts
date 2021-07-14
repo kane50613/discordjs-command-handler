@@ -1,5 +1,5 @@
 import { Message, MessageEmbed, Client, PermissionResolvable, GuildMember, Guild } from "discord.js"
-import {EventEmitter} from "events";
+import { EventEmitter } from "events";
 
 declare module "@gary50613/discord.js-command-handler" {
     export default function (client: Client, initOptions: initOption): void;
@@ -85,6 +85,14 @@ declare class InteractionHandler {
     public buildInteractionData(content: any): InteractionResponse
 }
 
+export interface CommandManagerEvents {
+    dm: [Message],
+    ratelimit: [number],
+    execute: [Command, Message]
+    error: [Error, Command, Message]
+    promiseError: [Error, Command, Message]
+}
+
 declare class CommandManager extends EventEmitter {
     public commands: Command[]
     public groups: Map<string, Group>
@@ -106,17 +114,8 @@ declare class CommandManager extends EventEmitter {
      */
     public get(name: string): Command
     public getGroup(groupName: string): Group
-
-    public on(name: 'dm', listener: (message: Message) => void): this
-    public on(name: 'ratelimit', listener: (time: number) => void): this
-    public on(name: 'execute', listener: (command: Command, message: Message) => void): this
-    public on(name: 'error' | 'promiseError', listener: (error: Error, command: Command, message: Message) => void): this
-
-    public once(name: 'dm', listener: (message: Message) => void): this
-    public once(name: 'ratelimit', listener: (time: number) => void): this
-    public once(name: 'execute', listener: (command: Command, message: Message) => void): this
-    public once(name: 'error' | 'promiseError', listener: (error: Error, command: Command, message: Message) => void): this
-
+    public on<K extends keyof CommandManagerEvents>(name: K, listener: (...args: CommandManagerEvents[K]) => void): this
+    public once<K extends keyof CommandManagerEvents>(name: K, listener: (...args: CommandManagerEvents[K]) => void): this
     public ratelimit?: RatelimitManager
 }
 
@@ -143,10 +142,10 @@ declare class RatelimitManager {
     public updateRatelimit(user: GuildMember): void
 }
 
-export class Util{
-    public static isObject(o:any):boolean
-    public static assignObject<K,T extends Object>(o:K,t:T):K
-    public static loadFolder(fPath:string):Command[]
+export class Util {
+    public static isObject(o: any): boolean
+    public static assignObject<K, T extends Object>(o: K, t: T): K
+    public static loadFolder(fPath: string): Command[]
 }
 
 declare module "discord.js" {
