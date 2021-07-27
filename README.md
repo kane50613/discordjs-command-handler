@@ -1,4 +1,6 @@
 # discord.js-command-handler
+<a href='https://ko-fi.com/Gary50613' target='_blank'><img height='35' style='border:0px;height:46px;' src='https://az743702.vo.msecnd.net/cdn/kofi3.png?v=0' border='0' alt='Buy Me a Coffee at ko-fi.com' />
+
 > Simple command handler for discord.js
 
 [繁體中文](docs/README-zh.md)
