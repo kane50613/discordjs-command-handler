@@ -59,8 +59,9 @@ class InteractionManager extends EventEmitter {
 	}
 
 	async _createCommand(command) {
-		this.bot?.guilds?.cache
-		.forEach(g => this.bot?.api?.applications(this.bot?.user?.id).guilds(g.id)?.commands?.post({data: command}))
+		for(let g of this.bot?.guilds?.cache.values())
+			await (this.bot?.api?.applications(this.bot?.user?.id))
+				.guilds(g.id)?.commands?.post({data: command}).catch(() => {})
 	}
 }
 
