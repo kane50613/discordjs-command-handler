@@ -9,29 +9,7 @@ class InteractionManager extends EventEmitter {
 		this.interactions = new Map()
 		this.bot = bot
 
-		bot.on("ready", async () => {
-			try {
-				for(let int of this.interactions.values())
-					await this.bot.application.commands.create(int)
-			} catch (e) { }
-		})
-
-		bot.on("interactionCreate", async (interaction) => {
-			console.log(interaction)
-			if(!interaction.isCommand())
-				return
-
-			let executor = this.interactions.get(interaction?.commandName)
-			if(executor) {
-				try {
-					executor.execute(bot, interaction)
-						.then(() => this.emit("execute", executor, interaction))
-						.catch((e) => this.emit("promiseError", e, executor, interaction))
-				} catch(e) {
-					this.emit("error", e, executor, interaction)
-				}
-			}
-		})
+		this.registerEventHandler()
 	}
 
 	/**
@@ -64,6 +42,30 @@ class InteractionManager extends EventEmitter {
 		await this.register(Util.loadFolder(folderPath))
 
 		return this
+	}
+
+	registerEventHandler() {
+		this.bot.on("ready", async () => {
+			for(let int of this.interactions.values())
+				await this.bot.application.commands.create(int).catch(() => {})
+		})
+
+		this.bot.on("interactionCreate", async (interaction) => {
+			if(!interaction.isCommand())
+				return
+
+			let executor = this.interactions.get(interaction?.commandName)
+			if(!executor)
+				return
+
+			try {
+				executor.execute(this.bot, interaction)
+					.then(() => this.emit("execute", executor, interaction))
+					.catch((e) => this.emit("promiseError", e, executor, interaction))
+			} catch(e) {
+				this.emit("error", e, executor, interaction)
+			}
+		})
 	}
 }
 
