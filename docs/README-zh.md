@@ -75,7 +75,7 @@ class Ping extends Command {
     }
     
     // 執行指令的方法
-    execute(message, args, member, guild) {
+    execute(bot, message, args) {
         // 就像寫 discord.js 一樣!
         message.reply('pong!')
     }
@@ -133,7 +133,7 @@ export default class Ping extends Command {
     }
 
     // 執行指令的方法
-    public async execute(bot: Client, message: Message, args: string[], member: GuildMember, guild: Guild) {
+    public async execute(bot: Client, message: Message, args: string[]) {
         // 就像寫 discord.js 一樣!
         message.reply("pong!")
     }

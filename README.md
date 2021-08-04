@@ -78,7 +78,7 @@ class Ping extends Command {
     }
     
     // execute function to call
-    async execute(bot, message, args, member, guild) {
+    async execute(bot, message, args) {
         // just write like normal discord.js
         message.reply('pong!')
     }
@@ -135,7 +135,7 @@ export default class Ping extends Command {
         );
     }
 
-    public async execute(bot: Client, message: Message, args: string[], member: GuildMember, guild: Guild) {
+    public async execute(bot: Client, message: Message, args: string[]) {
         // just write like normal discord.js
         message.reply("pong!")
     }

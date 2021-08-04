@@ -11,13 +11,15 @@ class InteractionResponse {
 
 	edit = async (content) => {
 		let data = this.buildInteractionData(content)
-		await this.bot.api.webhooks(this.bot?.user?.id, this.interaction?.token)?.messages(this.message.id).patch({data})
+		await this.getWebhook().patch({data})
 
-		return this.message
+		return this
 	}
 
 	delete = async () => {
-		await this.bot.api.webhooks(this.bot?.user?.id, this.interaction?.token)?.messages(this.message?.id).delete()
+		await this.getWebhook().delete()
+
+		return undefined
 	}
 
 	buildInteractionData(content) {
@@ -26,6 +28,11 @@ class InteractionResponse {
 		if(content.embed)
 			content = { embeds: [content.embed], content: content?.content }
 		return typeof content === "string" ? { content } : content
+	}
+
+	getWebhook() {
+		return await this.bot?.api?.webhooks(this.bot?.user?.id, this.interaction?.token)
+			?.messages(this.message.id)
 	}
 }
 

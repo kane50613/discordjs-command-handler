@@ -14,15 +14,15 @@ class InteractionManager extends EventEmitter {
 		bot.on("ready", () => this.init(bot, options))
 	}
 
-	async init(bot, options) {
+	async init(bot) {
 		this.interactions.forEach(c => this._createCommand(c))
 
 		bot.ws.on("INTERACTION_CREATE", async (interaction) => {
 			let executor = this.interactions.get(interaction?.data?.name)
 
 			if(executor) {
+				let handler = new InteractionHandler(bot, interaction)
 				try {
-					let handler = new InteractionHandler(bot, interaction)
 					executor.execute(bot, handler, interaction?.data?.options)
 						.then(() => this.emit("execute", executor, handler))
 						.catch((e) => this.emit("promiseError", e, executor, handler))

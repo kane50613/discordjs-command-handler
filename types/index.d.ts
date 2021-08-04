@@ -33,7 +33,7 @@ export class Command {
     public group: string;
     public aliases: string[]
     public constructor(name: string, description: string, usage: string, group: string, alias?: string[])
-    public execute(bot: Client, message: Message, args: string[], member: GuildMember, guild: Guild): Promise<any>
+    public execute(bot: Client, message: Message, args: string[]): Promise<any>
 }
 
 export class Group {
@@ -49,15 +49,16 @@ export class Interaction {
     public description: string;
     public options?: any[]
     public constructor(name: string, description: string, options?: any[])
-    public execute(bot: Client, interaction: InteractionHandler, options: any, member: GuildMember): Promise<any>
+    public execute(bot: Client, interaction: InteractionHandler, options: any): Promise<any>
 }
 
 declare class InteractionResponse {
     public bot: Client;
     public interaction: any;
-    public message: any
-    public edit(content: any): Promise<any>
+    public message: any;
+    public edit(content: any): Promise<this>
     public delete(): Promise<void>
+    public getWebhook(): Promise<any>
     public buildInteractionData(content: any): InteractionMessageContent
     public constructor(bot: Client, interaction: any, message: any)
 }

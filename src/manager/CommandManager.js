@@ -29,7 +29,7 @@ class CommandManager extends EventEmitter {
 			const [command, ...args] = m.content.slice(options.prefix.length).trim().split(/ +/g)
 
 			try {
-				bot.commands.get(command)?.execute(bot, m, args, m?.member, m?.guild)
+				bot.commands.get(command)?.execute(bot, m, args)
 					.then(() => this.emit("execute", bot.commands.get(command), m))
 					.catch((e) => this.emit("promiseError", e, bot.commands.get(command), m))
 					.finally(() => bot.ratelimit?.updateRatelimit(m?.member))
