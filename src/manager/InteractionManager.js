@@ -9,12 +9,19 @@ class InteractionManager extends EventEmitter {
 		this.interactions = new Map()
 		this.bot = bot
 
+		bot.on("ready", async () => {
+			try {
+				for(let int of this.interactions.values())
+					await this.bot.application.commands.create(int)
+			} catch (e) { }
+		})
+
 		bot.on("interactionCreate", async (interaction) => {
 			console.log(interaction)
 			if(!interaction.isCommand())
 				return
 
-			let executor = this.interactions.get(interaction?.command?.name)
+			let executor = this.interactions.get(interaction?.commandName)
 			if(executor) {
 				try {
 					executor.execute(bot, interaction)
@@ -43,7 +50,6 @@ class InteractionManager extends EventEmitter {
 				throw new Error(`interaction named "${int?.name}" already exist`)
 
 			this.interactions.set(int?.name, int)
-			await this.bot.application.commands.create(int)
 		}
 
 		return this
@@ -56,6 +62,8 @@ class InteractionManager extends EventEmitter {
 	 */
 	async loadFolder(folderPath) {
 		await this.register(Util.loadFolder(folderPath))
+
+		return this
 	}
 }
 
