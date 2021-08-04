@@ -7,17 +7,18 @@ class InteractionResponse {
 		this.bot = bot
 		this.interaction = interaction
 		this.message = message
+		this.webhook = this.getWebhook()
 	}
 
 	async edit(content) {
 		let data = this.buildInteractionData(content)
-		await this.getWebhook().patch({data})
+		await this.webhook?.patch({data})
 
 		return this
 	}
 
 	async delete() {
-		await this.getWebhook().delete()
+		await this.webhook?.delete()
 
 		return undefined
 	}
