@@ -31,9 +31,9 @@
   },
   "homepage": "https://github.com/Gary50613/discordjs-command-handler#readme",
   "devDependencies": {
-    "discord.js": "^12.5.3"
+    "discord.js": "github:discordjs/discord.js"
   },
   "dependencies": {
-    "@types/node": "^16.0.0"
+    "@types/node": "^14.17.3"
   }
 }

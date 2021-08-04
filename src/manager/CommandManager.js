@@ -2,6 +2,7 @@ const Group = require("../base/Group")
 const RatelimitManager = require("./RatelimitManager")
 const Command = require("../base/Command")
 const Util = require("../Util")
+const {ChannelTypes} = require("discord.js/typings/enums")
 
 const {EventEmitter} = require("events")
 
@@ -15,12 +16,12 @@ class CommandManager extends EventEmitter {
 		if (options?.ratelimit?.enable)
 			this.ratelimit = new RatelimitManager(options?.ratelimit)
 
-		bot.on("message", async (m) => {
+		bot.on("messageCreate", async (m) => {
 			if (!m?.content.startsWith(options?.prefix))
 				return
 			if (!options?.bot && m?.author?.bot)
 				return
-			if (!options?.dm && m?.channel?.type === "dm")
+			if (!options?.dm && m?.channel?.type === ChannelTypes.DM)
 				return this.emit("dm", m)
 
 			if (this?.ratelimit?.isRatelimited(m?.member))
