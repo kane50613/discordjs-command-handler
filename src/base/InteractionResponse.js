@@ -30,7 +30,7 @@ class InteractionResponse {
 		return typeof content === "string" ? { content } : content
 	}
 
-	getWebhook() {
+	async getWebhook() {
 		return await this.bot?.api?.webhooks(this.bot?.user?.id, this.interaction?.token)
 			?.messages(this.message.id)
 	}
