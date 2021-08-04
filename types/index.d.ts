@@ -58,7 +58,7 @@ declare class InteractionResponse {
     public message: any;
     public edit(content: any): Promise<this>
     public delete(): Promise<void>
-    public getWebhook(): Promise<any>
+    public getWebhook(): any
     public buildInteractionData(content: any): InteractionMessageContent
     public constructor(bot: Client, interaction: any, message: any)
 }
