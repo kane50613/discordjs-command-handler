@@ -2,3 +2,4 @@ node_modules
 discordjs-command-handler.iml
 .idea
 test/.env
+package-lock.json
