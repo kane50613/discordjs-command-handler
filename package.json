@@ -1,7 +1,7 @@
 {
   "name": "@gary50613/discord.js-command-handler",
-  "version": "2.6.0",
-  "description": "simple discord.js command handler",
+  "version": "3.0.0",
+  "description": "simple discord.js v13 command handler",
   "main": "src/index.js",
   "types": "types/index.d.ts",
   "directories": {

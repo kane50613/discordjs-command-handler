@@ -11,7 +11,7 @@ export interface RateLimitOptions {
     interval?: number
     bypass?: {
         users?: string[], // specific users ID can bypass ratelimit
-        permissions?: keyof PermissionResolvable[], // specific perimissions FLAG can bypass ratelimit
+        permissions?: keyof PermissionResolvable[], // specific permissions FLAG can bypass ratelimit
         roles?: string[] // // specific roles ID can bypass ratelimit
     }
 }
@@ -85,6 +85,9 @@ declare class CommandManager extends EventEmitter {
      */
     public get(name: string): Command
     public getGroup(groupName: string): Group
+
+    public middleware(handler: (executor: Command, message: Message, args: string[], response: void, reject?: void) => void): void
+
     public on<K extends keyof CommandManagerEvents>(name: K, listener: (...args: CommandManagerEvents[K]) => void): this
     public once<K extends keyof CommandManagerEvents>(name: K, listener: (...args: CommandManagerEvents[K]) => void): this
     public ratelimit?: RatelimitManager

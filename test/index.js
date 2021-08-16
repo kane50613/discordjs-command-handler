@@ -22,6 +22,11 @@ bot.commands.on("promiseError", (e) => console.error(e))
 
 bot.commands.on("ratelimit", (c, m) => console.log(c))
 
+bot.commands.middleware(async (executor, message, args, response) => {
+	console.log(executor.name)
+	response()
+})
+
 bot.interaction.register(new (require("./interactions/ping"))())
 
 bot.on('ready', () => {
