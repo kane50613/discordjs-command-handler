@@ -1,6 +1,11 @@
+require('dotenv').config()
+
 const Discord = require('discord.js')
 
-const bot = new Discord.Client()
+const bot = new Discord.Client({
+ 	intents: Object.values(Discord.Intents.FLAGS)
+		.filter(x => x !== Discord.Intents.FLAGS.GUILD_PRESENCES)
+})
 require("../src")(bot, {
 	prefix: '.',
 	ratelimit: {
@@ -17,13 +22,19 @@ bot.commands.on("promiseError", (e) => console.error(e))
 
 bot.commands.on("ratelimit", (c, m) => console.log(c))
 
+bot.commands.middleware(async (executor, message, args, response) => {
+	console.log(executor.name)
+	response()
+})
+
 bot.interaction.register(new (require("./interactions/ping"))())
 
 bot.on('ready', () => {
 	console.log('bot ready')
 })
 
-bot.login(process.env.TOKEN).catch(e => {
-	console.error(e)
-	process.exit(0)
-})
+bot.login(process.env.TOKEN)
+	.catch(e => {
+		console.error(e)
+		process.exit(0)
+	})

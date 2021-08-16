@@ -12,6 +12,7 @@ class Ping extends Command {
 	}
 
 	async execute(bot, message, args) {
+		console.log(args)
 		message.reply('pong!')
 	}
 }

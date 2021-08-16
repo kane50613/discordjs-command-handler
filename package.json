@@ -1,11 +1,14 @@
 {
   "name": "@gary50613/discord.js-command-handler",
-  "version": "2.6.0",
-  "description": "simple discord.js command handler",
+  "version": "3.0.0",
+  "description": "simple discord.js v13 command handler",
   "main": "src/index.js",
   "types": "types/index.d.ts",
   "directories": {
     "test": "test"
+  },
+  "engines": {
+    "node": ">=16.x"
   },
   "scripts": {
     "build": "npm i --save-dev",
@@ -31,9 +34,10 @@
   },
   "homepage": "https://github.com/Gary50613/discordjs-command-handler#readme",
   "devDependencies": {
-    "discord.js": "^12.5.3"
+    "@types/node": "^14.17.3",
+    "dotenv": "^10.0.0"
   },
   "dependencies": {
-    "@types/node": "^16.0.0"
+    "discord.js": "github:discordjs/discord.js"
   }
 }

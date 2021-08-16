@@ -10,31 +10,49 @@ class CommandManager extends EventEmitter {
 		super()
 
 		this.commands = []
+		this.middlewares = []
 		this.groups = new Map()
 
 		if (options?.ratelimit?.enable)
 			this.ratelimit = new RatelimitManager(options?.ratelimit)
 
-		bot.on("message", async (m) => {
-			if (!m?.content.startsWith(options?.prefix))
+		bot.on("messageCreate", async (m) => {
+			if (
+				!m?.content.startsWith(options?.prefix) ||
+				(!options?.bot && m?.author?.bot)
+			)
 				return
-			if (!options?.bot && m?.author?.bot)
-				return
-			if (!options?.dm && m?.channel?.type === "dm")
+			if (!options?.dm && m?.channel?.type === 'DM')
 				return this.emit("dm", m)
 
 			if (this?.ratelimit?.isRatelimited(m?.member))
 				return this.emit("ratelimit", this?.ratelimit?.getRatelimit(m?.member), m)
 
 			const [command, ...args] = m.content.slice(options.prefix.length).trim().split(/ +/g)
+			const executor = bot.commands.get(command)
+
+			if(!executor)
+				return
 
 			try {
-				bot.commands.get(command)?.execute(bot, m, args)
-					.then(() => this.emit("execute", bot.commands.get(command), m))
-					.catch((e) => this.emit("promiseError", e, bot.commands.get(command), m))
+				let executable = true
+				for(let middleware of this.middlewares)
+					try {
+						await new Promise((r, j) => middleware(executor, m, args, r, j))
+					} catch(e) {
+						executable = false
+						break
+					}
+
+				if(!executable)
+					return
+
+				executor?.execute(bot, m, args)
+					.then(() => this.emit("execute", executor, m))
+					.catch((e) => this.emit("promiseError", e, executor, m))
 					.finally(() => bot.ratelimit?.updateRatelimit(m?.member))
 			} catch (e) {
-				this.emit("error", e, bot.commands.get(command), m)
+				this.emit("error", e, executor, m)
 			}
 		})
 	}
@@ -78,7 +96,7 @@ class CommandManager extends EventEmitter {
 	/**
 	 * @description return command by name or alias
 	 * @param name command's name or alias
-	 * @return command
+	 * @returns {?Command}
 	 */
 	get(name) {
 		return this.commands.find((c) => c?.name === name.toLowerCase() || c?.alias?.includes(name.toLowerCase()))
@@ -86,6 +104,13 @@ class CommandManager extends EventEmitter {
 
 	getGroup(x) {
 		return this.groups.get(x)
+	}
+
+	middleware(handler) {
+		if(typeof handler !== 'function')
+			throw new TypeError('middleware must be a function or arrow function')
+
+		this.middlewares.push(handler)
 	}
 }
 
