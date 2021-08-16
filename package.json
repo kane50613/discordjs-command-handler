@@ -7,6 +7,9 @@
   "directories": {
     "test": "test"
   },
+  "engines": {
+    "node": ">=16.x"
+  },
   "scripts": {
     "build": "npm i --save-dev",
     "test": "cd test && node index"
